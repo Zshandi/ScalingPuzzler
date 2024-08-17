@@ -1,0 +1,106 @@
+[gd_scene load_steps=7 format=3 uid="uid://cq1vfprg3p48b"]
+
+[ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
+[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://images/prawndee.png" id="2_k05cd"]
+
+[sub_resource type="SystemFont" id="SystemFont_sy7s8"]
+font_names = PackedStringArray("Droid Sans")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
+font = SubResource("SystemFont_sy7s8")
+font_size = 40
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 11
+shadow_color = Color(0, 0, 0, 0.360784)
+shadow_offset = Vector2(5.13, 2.395)
+
+[sub_resource type="SystemFont" id="SystemFont_r8ju1"]
+font_names = PackedStringArray("Droid Sans")
+font_weight = 750
+
+[sub_resource type="LabelSettings" id="LabelSettings_y4xq8"]
+font_size = 22
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2e4oi")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.470588, 1, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 120
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 120
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 23
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 45
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cool Game Zshandi Wanted
+To Make :)"
+label_settings = SubResource("LabelSettings_jnk7w")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="Play" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_r8ju1")
+theme_override_font_sizes/font_size = 31
+text = "Play"
+
+[node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_r8ju1")
+theme_override_font_sizes/font_size = 31
+text = "Quit"
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Created by Tayo"
+label_settings = SubResource("LabelSettings_y4xq8")
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_k05cd")
+expand_mode = 3
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_play_pressed"]
