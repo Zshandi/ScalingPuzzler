@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cshjud338xlad"]
+[gd_scene load_steps=8 format=3 uid="uid://em5gstufmnb1"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
 [ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://images/prawndee.png" id="2_k05cd"]
+[ext_resource type="PackedScene" uid="uid://d1dxk3g6y2oei" path="res://level.tscn" id="2_yaipc"]
 
 [sub_resource type="SystemFont" id="SystemFont_sy7s8"]
 font_names = PackedStringArray("Droid Sans")
@@ -32,6 +33,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2e4oi")
+scene_to_load_on_play = ExtResource("2_yaipc")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
