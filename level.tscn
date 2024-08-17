@@ -10,8 +10,9 @@
 position = Vector2(527, 321)
 script = ExtResource("1_hs6ep")
 
-[node name="ScalableRoomInner" type="Node2D" parent="ControllingRoom"]
+[node name="ScalableRoomInner" type="StaticBody2D" parent="ControllingRoom"]
 rotation = 3.14159
+metadata/_edit_group_ = true
 
 [node name="Block_20x20_" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
 position = Vector2(-110, -103)
