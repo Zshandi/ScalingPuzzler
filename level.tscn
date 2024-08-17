@@ -7,9 +7,10 @@
 
 [node name="Level" type="Node2D"]
 
-[node name="ControllingRoom" type="Node2D" parent="."]
+[node name="ControllingRoom" type="Node2D" parent="." node_paths=PackedStringArray("transform_target")]
 position = Vector2(527, 321)
 script = ExtResource("1_hs6ep")
+transform_target = NodePath("ScalableRoomInner")
 
 [node name="ScalableRoomInner" type="StaticBody2D" parent="ControllingRoom"]
 rotation = 3.14159
