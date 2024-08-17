@@ -8,13 +8,18 @@ var scale_factor := 500.0
 func _ready():
 	pass # Replace with function body.
 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	handle_scaling(delta)
+	handle_translation(delta)
+	handle_rotation(delta)
+
 var scale_origin := Vector2.ZERO
 var original_scale := 0.0
 var is_scaling := false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	
+func handle_scaling(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		var current_cursor_pos := get_viewport().get_mouse_position()
 		if !is_scaling:
@@ -36,3 +41,9 @@ func _physics_process(delta):
 			$ScalableRoomInner.linear_scale_from(scale_origin, distance_to_go)
 	else:
 		is_scaling = false
+
+func handle_translation(delta):
+	pass
+
+func handle_rotation(delta):
+	pass
