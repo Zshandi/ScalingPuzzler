@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cq1vfprg3p48b"]
+[gd_scene load_steps=7 format=3 uid="uid://cshjud338xlad"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
 [ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://images/prawndee.png" id="2_k05cd"]
@@ -103,4 +103,4 @@ texture = ExtResource("2_k05cd")
 expand_mode = 3
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
