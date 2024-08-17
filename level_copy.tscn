@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://cga82pv3bhb1o"]
+
+[ext_resource type="Script" path="res://controller.gd" id="1_pfe70"]
+[ext_resource type="PackedScene" uid="uid://cxtn3jpr3d1ax" path="res://block_20x_20_.tscn" id="2_bwqkk"]
+[ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_g36tg"]
+
+[node name="Level" type="Node2D"]
+
+[node name="ControllingRoom" type="Node2D" parent="."]
+position = Vector2(527, 321)
+script = ExtResource("1_pfe70")
+
+[node name="ScalableRoomInner" type="Node2D" parent="ControllingRoom"]
+rotation = 3.14159
+
+[node name="Block_20x20_" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(-110, -103)
+scale = Vector2(1, 11.16)
+
+[node name="Block_20x20_2" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(93, -103)
+scale = Vector2(1, 11.16)
+
+[node name="Block_20x20_3" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(-8, -204)
+rotation = 1.5708
+scale = Vector2(1, 11.16)
+
+[node name="Block_20x20_8" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(1, 206)
+rotation = 1.5708
+scale = Vector2(1, 24.92)
+
+[node name="Block_20x20_4" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(139, 0)
+rotation = 1.5708
+scale = Vector2(1, 11.16)
+
+[node name="Block_20x20_5" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(-143, -2)
+rotation = 1.5708
+scale = Vector2(1, 11.16)
+
+[node name="Block_20x20_6" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(242, 104)
+scale = Vector2(1, 11.16)
+
+[node name="Block_20x20_7" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("2_bwqkk")]
+position = Vector2(-246, 104)
+scale = Vector2(1, 11.16)
+
+[node name="Ball" parent="." instance=ExtResource("3_g36tg")]
+position = Vector2(358, 256)
