@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://chg1aq00iqvy1"]
+
+[ext_resource type="Script" path="res://goal.gd" id="1_67fba"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6h6y"]
+size = Vector2(35, 35)
+
+[node name="Goal" type="Area2D"]
+script = ExtResource("1_67fba")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s6h6y")
+debug_color = Color(0.969541, 0, 0.460675, 0.42)
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
