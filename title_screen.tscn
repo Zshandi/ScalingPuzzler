@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://em5gstufmnb1"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
-[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://images/prawndee.png" id="2_k05cd"]
+[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://assets/gfx/prawndee.png" id="2_k05cd"]
 [ext_resource type="PackedScene" uid="uid://d1dxk3g6y2oei" path="res://level.tscn" id="2_yaipc"]
 
 [sub_resource type="SystemFont" id="SystemFont_sy7s8"]
