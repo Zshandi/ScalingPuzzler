@@ -2,9 +2,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wgua8"]
 
-[node name="Block_20x20_" type="StaticBody2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D"]
 shape = SubResource("RectangleShape2D_wgua8")
 
 [node name="ColorRect" type="ColorRect" parent="."]
