@@ -30,6 +30,8 @@ var translation_line_width:float = 3.0
 ## The node to apply transform controls to by default
 var transform_target:Transformable
 
+var translate_line:CappedLine
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Assumes equal x and y scale
@@ -38,22 +40,16 @@ func _ready():
 	target_scale = transform_target.get_current_linear_scale()
 	
 	translate_target = transform_target.global_position
+	
+	translate_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
+	translate_line.visible = false
+	get_tree().root.add_child(translate_line)
+	translate_line.owner = owner
 
-func _process(delta: float) -> void:
-	queue_redraw()
-
-func _draw() -> void:
-	if draw_translate_line:
-		draw_line(translate_line_from - global_position, translate_line_to - global_position,
-			translation_line_color, translation_line_width, true)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	handle_scaling(delta)
 	handle_translation(delta)
 	handle_rotation(delta)
-
-#var original_scale := 0.0
 
 var target_scale:float = 0.0
 var scale_direction:int = 0
@@ -105,16 +101,12 @@ var is_translating:bool = false
 var translate_origin_offset := Vector2.ZERO
 var translate_target := Vector2.ZERO
 
-var translate_line_from := Vector2.ZERO
-var translate_line_to := Vector2.ZERO
-var draw_translate_line:bool = false
-
 func handle_translation(delta):
 	var cursor_pos := get_viewport().get_mouse_position()
 	var translate_current := transform_target.global_position
 	
 	if Input.is_action_pressed("control_translate_activate"):
-		draw_translate_line = true
+		translate_line.visible = true
 		is_translating = true
 		if !is_translating_pressed:
 			# Setup the offset to start with
@@ -141,11 +133,11 @@ func handle_translation(delta):
 	else:
 		transform_target.global_transform = transform_target.global_transform.translated(translate_by)
 	
-	if translate_by != Vector2.ZERO && draw_translate_line:
-		translate_line_from = translate_current + translate_origin_offset
-		translate_line_to = translate_target
+	if translate_by != Vector2.ZERO && translate_line.visible:
+		translate_line.from = translate_current + translate_origin_offset
+		translate_line.to = translate_target
 	else:
-		draw_translate_line = false
+		translate_line.visible = false
 
 func handle_rotation(delta):
 	pass
