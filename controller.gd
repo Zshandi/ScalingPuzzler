@@ -90,9 +90,18 @@ func handle_scaling(delta):
 		scale_by = max(-max_scale_speed, scale_by)
 		scale_by = min(max_scale_speed, scale_by)
 		
+		# un-transform translate_target to account for scaling
+		translate_target = transform_target.to_local(translate_target)
+		translate_origin_offset = transform_target.to_local(translate_origin_offset + transform_target.global_position)
+		
 		transform_target.linear_scale_from(scale_origin, scale_by)
+		
+		# re-transform translate_target to account for scaling
+		translate_target = transform_target.to_global(translate_target)
+		translate_origin_offset = transform_target.to_global(translate_origin_offset) - transform_target.global_position
 
 var is_translating_pressed:bool = false
+var is_translating:bool = false
 var translate_origin_offset := Vector2.ZERO
 var translate_target := Vector2.ZERO
 
@@ -106,6 +115,7 @@ func handle_translation(delta):
 	
 	if Input.is_action_pressed("control_translate_activate"):
 		draw_translate_line = true
+		is_translating = true
 		if !is_translating_pressed:
 			# Setup the offset to start with
 			translate_origin_offset = cursor_pos - transform_target.global_position
@@ -125,8 +135,9 @@ func handle_translation(delta):
 	if translate_by_length > max_translation_speed:
 		translate_by = translate_by.normalized() * max_translation_speed
 	
-	if translate_by_length < 0.1:
+	if translate_by_length < 0.1 or not is_translating:
 		translate_by = Vector2.ZERO
+		is_translating = false
 	else:
 		transform_target.global_transform = transform_target.global_transform.translated(translate_by)
 	
