@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1dxk3g6y2oei"]
+[gd_scene load_steps=8 format=3 uid="uid://d1dxk3g6y2oei"]
 
 [ext_resource type="Script" path="res://controller.gd" id="1_hs6ep"]
 [ext_resource type="PackedScene" uid="uid://cxtn3jpr3d1ax" path="res://block_20x_20_.tscn" id="1_nkas4"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_lp4p4"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="5_tcym5"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="6_02fwp"]
+[ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="7_8i2ys"]
 
 [node name="Level" type="Node2D"]
 
@@ -60,3 +61,7 @@ position = Vector2(358, 256)
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("5_tcym5")]
 background = ExtResource("6_02fwp")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_8i2ys")
+autoplay = true
