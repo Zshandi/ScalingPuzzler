@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://djvv2dg4xowfh"]
+
+[ext_resource type="Shader" path="res://level_collision.gdshader" id="1_bv0oe"]
+[ext_resource type="Texture2D" uid="uid://b57ge3epwfwkb" path="res://assets/backgrounds/tile_20x20.png" id="2_5kioy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2rvfl"]
+shader = ExtResource("1_bv0oe")
+shader_parameter/texture_size = Vector2(75, 75)
+shader_parameter/modulate_color = Vector4(0.5, -0.74, 0.915, 1)
+shader_parameter/texture_albedo = ExtResource("2_5kioy")
+
+[node name="LevelPolygon" type="CollisionPolygon2D"]
+polygon = PackedVector2Array(211, 9.00055, 16.0001, -21.9999, 14.0004, -149, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -31.9996, -151, -29, 6.99994, -133, 8.99966, -133, 92.9997, -184, 93.9995, -188, 5.99954, -273, 7.99933, -272, 182.999, 2.99957, 182, -1.00061, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_2rvfl")
+texture = ExtResource("2_5kioy")
+polygon = PackedVector2Array(211, 9.00055, 16.0001, -21.9999, 14.0004, -149, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -31.9996, -151, -29, 6.99994, -133, 8.99966, -133, 92.9997, -184, 93.9995, -188, 5.99954, -273, 7.99933, -272, 182.999, 2.99957, 182, -1.00061, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
