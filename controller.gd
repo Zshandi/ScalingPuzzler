@@ -30,6 +30,10 @@ var translation_line_width:float = 3.0
 ## The node to apply transform controls to by default
 var transform_target:Transformable
 
+@export
+## The node that represents the character to reach the goal
+var character:Ball
+
 var translate_line:CappedLine
 
 # Called when the node enters the scene tree for the first time.
@@ -44,7 +48,7 @@ func _ready():
 	translate_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
 	translate_line.visible = false
 	get_tree().root.add_child(translate_line)
-	translate_line.owner = owner
+	translate_line.owner = get_tree().root
 
 func _physics_process(delta):
 	handle_scaling(delta)
@@ -54,9 +58,6 @@ func _physics_process(delta):
 var target_scale:float = 0.0
 var scale_direction:int = 0
 var scale_origin := Vector2.ZERO
-
-## Temporary HACK until we actually stop the ball from clipping in #4 (https://github.com/Zshandi/ScalingPuzzler/issues/4)
-var min_scale := -1.2
 
 func handle_scaling(delta):
 	var current_scale:float = transform_target.get_current_linear_scale()
@@ -74,10 +75,9 @@ func handle_scaling(delta):
 		# Get new scale (exp decay to target)
 		var scale_to := lerpf(current_scale, target_scale, delta * scale_strength)
 		
-		## Temporary HACK until we actually stop the ball from clipping in #4 (https://github.com/Zshandi/ScalingPuzzler/issues/4)
-		if scale_to < min_scale:
-			scale_to = min_scale
-			target_scale = min_scale
+		if character.is_between_walls && target_scale - current_scale < 0:
+			scale_to = current_scale
+			target_scale = current_scale
 		
 		# Scale to that scale
 		var scale_by := scale_to - current_scale
