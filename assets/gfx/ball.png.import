@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v55sph685ptg"
-path="res://.godot/imported/prawndee.png-299b176b9142ff31a42b8cd6dd31be0d.ctex"
+uid="uid://bjm8int7qqk1a"
+path="res://.godot/imported/ball.png-ef47af67a80fd51ea37efa2773a7549c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/prawndee.png"
-dest_files=["res://.godot/imported/prawndee.png-299b176b9142ff31a42b8cd6dd31be0d.ctex"]
+source_file="res://assets/gfx/ball.png"
+dest_files=["res://.godot/imported/ball.png-ef47af67a80fd51ea37efa2773a7549c.ctex"]
 
 [params]
 
