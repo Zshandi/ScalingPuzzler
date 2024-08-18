@@ -7,9 +7,6 @@ func _ready() -> void:
 	
 func _update_texture_rect_size():
 	block_texture.size = shape.extents * 2
-	print(block_texture.size)
-	print(block_texture.position)
-	print("\n")
 	
 	block_texture.position = Vector2(
 		(block_texture.size.x/2)*-1,
