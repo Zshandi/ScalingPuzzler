@@ -1,12 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1dxk3g6y2oei"]
+[gd_scene load_steps=10 format=3 uid="uid://d1dxk3g6y2oei"]
 
 [ext_resource type="Script" path="res://controller.gd" id="1_hs6ep"]
-[ext_resource type="PackedScene" uid="uid://cxtn3jpr3d1ax" path="res://block_20x_20_.tscn" id="1_nkas4"]
 [ext_resource type="Script" path="res://transformable.gd" id="2_rhtag"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_lp4p4"]
+[ext_resource type="Shader" path="res://level_collision.gdshader" id="3_rrem5"]
+[ext_resource type="Texture2D" uid="uid://b57ge3epwfwkb" path="res://assets/backgrounds/tile_20x20.png" id="4_le78o"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="5_tcym5"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="6_02fwp"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="7_8i2ys"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2rvfl"]
+shader = ExtResource("3_rrem5")
+shader_parameter/texture_size = Vector2(75, 75)
+shader_parameter/modulate_color = Vector4(0.5, -0.74, 0.915, 1)
+shader_parameter/texture_albedo = ExtResource("4_le78o")
 
 [node name="Level" type="Node2D"]
 
@@ -19,43 +26,14 @@ character = NodePath("../Ball")
 [node name="ScalableRoomInner" type="StaticBody2D" parent="ControllingRoom"]
 rotation = 3.14159
 script = ExtResource("2_rhtag")
-metadata/_edit_group_ = true
 
-[node name="Block_20x20_" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(-110, -103)
-scale = Vector2(1, 11.16)
+[node name="LevelPolygon" type="CollisionPolygon2D" parent="ControllingRoom/ScalableRoomInner"]
+polygon = PackedVector2Array(211, 9.00055, 16.0001, -21.9999, 14.0004, -149, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -31.9996, -151, -29, 6.99994, -133, 8.99966, -133, 92.9997, -184, 93.9995, -188, 5.99954, -273, 7.99933, -272, 182.999, 2.99957, 182, 9.99939, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
 
-[node name="Block_20x20_2" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(93, -103)
-scale = Vector2(1, 11.16)
-
-[node name="Block_20x20_3" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(-8, -204)
-rotation = 1.5708
-scale = Vector2(1, 11.16)
-
-[node name="Block_20x20_8" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(1, 206)
-rotation = 1.5708
-scale = Vector2(1, 24.92)
-
-[node name="Block_20x20_4" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(139, 0)
-rotation = 1.5708
-scale = Vector2(1, 11.16)
-
-[node name="Block_20x20_5" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(-143, -2)
-rotation = 1.5708
-scale = Vector2(1, 11.16)
-
-[node name="Block_20x20_6" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(242, 104)
-scale = Vector2(1, 11.16)
-
-[node name="Block_20x20_7" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("1_nkas4")]
-position = Vector2(-246, 104)
-scale = Vector2(1, 11.16)
+[node name="Polygon2D" type="Polygon2D" parent="ControllingRoom/ScalableRoomInner/LevelPolygon"]
+material = SubResource("ShaderMaterial_2rvfl")
+texture = ExtResource("4_le78o")
+polygon = PackedVector2Array(211, 9.00055, 16.0001, -21.9999, 14.0004, -149, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -31.9996, -151, -29, 6.99994, -133, 8.99966, -133, 92.9997, -184, 93.9995, -188, 5.99954, -273, 7.99933, -272, 182.999, 2.99957, 182, 9.99939, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
 
 [node name="Ball" parent="." instance=ExtResource("3_lp4p4")]
 position = Vector2(358, 256)
