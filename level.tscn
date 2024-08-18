@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1dxk3g6y2oei"]
+[gd_scene load_steps=4 format=3 uid="uid://d1dxk3g6y2oei"]
 
 [ext_resource type="Script" path="res://controller.gd" id="1_hs6ep"]
 [ext_resource type="PackedScene" uid="uid://cxtn3jpr3d1ax" path="res://block_20x_20_.tscn" id="1_nkas4"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_lp4p4"]
-[ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="4_2f0xv"]
-[ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="5_oxtqk"]
 
 [node name="Level" type="Node2D"]
 
@@ -53,6 +51,3 @@ scale = Vector2(1, 11.16)
 
 [node name="Ball" parent="." instance=ExtResource("3_lp4p4")]
 position = Vector2(358, 256)
-
-[node name="ScrollingBackground" parent="." instance=ExtResource("4_2f0xv")]
-background = ExtResource("5_oxtqk")
