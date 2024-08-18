@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://wi45u4plniuo"]
+
+[ext_resource type="PackedScene" uid="uid://c0ntj3kd7wjfy" path="res://Levels/base_level.tscn" id="1_k0hyv"]
+[ext_resource type="Shader" path="res://Levels/level_collision.gdshader" id="2_aa1na"]
+[ext_resource type="Texture2D" uid="uid://b57ge3epwfwkb" path="res://assets/backgrounds/tile_20x20.png" id="3_sl76a"]
+[ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="4_kiukh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dipf4"]
+shader = ExtResource("2_aa1na")
+shader_parameter/texture_size = Vector2(75, 75)
+shader_parameter/modulate_color = Vector4(0.375, 0.675, 0.35, 1)
+shader_parameter/texture_albedo = ExtResource("3_sl76a")
+
+[node name="Level" instance=ExtResource("1_k0hyv")]
+scale = Vector2(2.015, 2.015)
+
+[node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0"]
+position = Vector2(203.427, 65.4174)
+polygon = PackedVector2Array(281, -14.9993, -105, -18.0003, -105, -17.0003, -93.9999, -17.0002, -93.9999, -16.0002, -153, -16.0004, -156.001, 223, 44.9995, 222, 45.9993, 299, -285.001, 299.999, -288, -99.0007, 384, -98.999, 381.999, 287.001, 89.9993, 297, 91.9995, 224, 290.999, 224.001)
+
+[node name="Polygon2D" parent="ControllingRoom/ScalableRoomInner/LevelPolygon" index="0"]
+material = SubResource("ShaderMaterial_dipf4")
+polygon = PackedVector2Array(281, -14.9993, -105, -18.0003, -105, -17.0003, -93.9999, -17.0002, -93.9999, -16.0002, -153, -16.0004, -156.001, 223, 102.999, 225, 99.9993, 295, -285.001, 299.999, -288, -99.0007, 384, -98.999, 380.999, 297.001, 89.9993, 297, 91.9995, 224, 290.999, 224.001)
+
+[node name="Goal" parent="ControllingRoom/ScalableRoomInner" index="1" instance=ExtResource("4_kiukh")]
+position = Vector2(99.2083, 51.0251)
+scale = Vector2(0.075919, 0.0444433)
+
+[node name="Ball" parent="." index="1"]
+position = Vector2(247.643, 138.958)
