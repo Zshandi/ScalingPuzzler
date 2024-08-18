@@ -13,6 +13,20 @@ var scale_strength := 5.0
 var max_scale_speed := 0.2
 
 @export
+## The strength of the scale smoothing
+## Note that this corresponds to an exponential decay from the current scale to the target,
+##  meaning it is not really an exact speed, but rather just determines how steep the decay is,
+##  but the exact speed will be dependent on the current distance to the target
+var translation_strength:float = 10.0
+@export
+var max_translation_speed:float = 20
+
+@export
+var translation_line_color := Color.WHITE
+@export
+var translation_line_width:float = 3.0
+
+@export
 ## The node to apply transform controls to by default
 var transform_target:Transformable
 
@@ -22,7 +36,16 @@ func _ready():
 	assert(transform_target.global_transform.get_scale().x ==
 		transform_target.global_transform.get_scale().y)
 	target_scale = transform_target.get_current_linear_scale()
+	
+	translate_target = transform_target.global_position
 
+func _process(delta: float) -> void:
+	queue_redraw()
+
+func _draw() -> void:
+	if draw_translate_line:
+		draw_line(translate_line_from - global_position, translate_line_to - global_position,
+			translation_line_color, translation_line_width, true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -69,8 +92,49 @@ func handle_scaling(delta):
 		
 		transform_target.linear_scale_from(scale_origin, scale_by)
 
+var is_translating_pressed:bool = false
+var translate_origin_offset := Vector2.ZERO
+var translate_target := Vector2.ZERO
+
+var translate_line_from := Vector2.ZERO
+var translate_line_to := Vector2.ZERO
+var draw_translate_line:bool = false
+
 func handle_translation(delta):
-	pass
+	var cursor_pos := get_viewport().get_mouse_position()
+	var translate_current := transform_target.global_position
+	
+	if Input.is_action_pressed("control_translate_activate"):
+		draw_translate_line = true
+		if !is_translating_pressed:
+			# Setup the offset to start with
+			translate_origin_offset = cursor_pos - transform_target.global_position
+			print_debug("translate_origin_offset: ", translate_origin_offset)
+			is_translating_pressed = true
+		
+		translate_target = cursor_pos
+	else:
+		is_translating_pressed = false
+	
+	var offset_to_cursor := translate_target - (translate_current + translate_origin_offset)
+	
+	var translate_by := Vector2.ZERO.lerp(offset_to_cursor, delta * translation_strength)
+	
+	var translate_by_length := translate_by.length()
+	
+	if translate_by_length > max_translation_speed:
+		translate_by = translate_by.normalized() * max_translation_speed
+	
+	if translate_by_length < 0.1:
+		translate_by = Vector2.ZERO
+	else:
+		transform_target.global_transform = transform_target.global_transform.translated(translate_by)
+	
+	if translate_by != Vector2.ZERO && draw_translate_line:
+		translate_line_from = translate_current + translate_origin_offset
+		translate_line_to = translate_target
+	else:
+		draw_translate_line = false
 
 func handle_rotation(delta):
 	pass
