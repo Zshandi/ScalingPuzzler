@@ -3,9 +3,7 @@
 [ext_resource type="Script" path="res://controller.gd" id="1_pfe70"]
 [ext_resource type="PackedScene" uid="uid://cxtn3jpr3d1ax" path="res://block_20x_20_.tscn" id="2_bwqkk"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_g36tg"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6h6y"]
-size = Vector2(35, 35)
+[ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="3_yknmn"]
 
 [node name="Level" type="Node2D"]
 
@@ -52,11 +50,9 @@ scale = Vector2(1, 11.16)
 position = Vector2(-246, 104)
 scale = Vector2(1, 11.16)
 
-[node name="Goal" type="Area2D" parent="ControllingRoom/ScalableRoomInner"]
-position = Vector2(-5.99956, -174)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ControllingRoom/ScalableRoomInner/Goal"]
-shape = SubResource("RectangleShape2D_s6h6y")
+[node name="Goal" parent="ControllingRoom/ScalableRoomInner" instance=ExtResource("3_yknmn")]
+position = Vector2(-6.99974, -104)
+scale = Vector2(5.19097, 5.19097)
 
 [node name="Ball" parent="." instance=ExtResource("3_g36tg")]
 position = Vector2(358, 256)
