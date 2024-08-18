@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgsyv55s3of86"]
 
 [ext_resource type="Script" path="res://IntroBackground.gd" id="1_a6gux"]
-[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://images/prawndee.png" id="2_hyngp"]
+[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://assets/images/prawndee.png" id="2_hyngp"]
 
 [node name="ScrollingBackground" type="ParallaxBackground"]
 script = ExtResource("1_a6gux")
