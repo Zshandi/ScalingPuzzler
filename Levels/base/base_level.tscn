@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=8 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://controller.gd" id="1_wouat"]
 [ext_resource type="Script" path="res://transformable.gd" id="2_q7yih"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="5_tgi00"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="6_45bhn"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
+[ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera/camera.tscn" id="7_u76nt"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
 
 [node name="Level" type="Node2D"]
@@ -28,3 +29,5 @@ background = ExtResource("7_hwag8")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_jt8gq")
 autoplay = true
+
+[node name="Camera2D" parent="." instance=ExtResource("7_u76nt")]
