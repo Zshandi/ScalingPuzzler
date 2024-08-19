@@ -31,16 +31,19 @@ func _ready() -> void:
 		ball = $"../Ball"
 	$CameraArea/CollisionShape2D.shape.size = get_viewport_rect().size
 	$CameraArea/CollisionShape2D.position = get_viewport_rect().size / 2
+	
+	is_center_pan_locked = true
+	pan_to_center()
 
 func _process(delta: float) -> void:
 	
-	if Input.is_action_just_pressed("camera_pan_center_lock"):
-		is_center_pan_locked = not is_center_pan_locked
-		if is_center_pan_locked:
-			pan_to_center()
-	
-	if Input.is_action_just_pressed("camera_pan_center") and not is_center_pan_locked:
-		pan_to_center()
+	#if Input.is_action_just_pressed("camera_pan_center_lock"):
+		#is_center_pan_locked = not is_center_pan_locked
+		#if is_center_pan_locked:
+			#pan_to_center()
+	#
+	#if Input.is_action_just_pressed("camera_pan_center") and not is_center_pan_locked:
+		#pan_to_center()
 	
 	if is_center_pan_locked:
 		if is_panning_to_center:
