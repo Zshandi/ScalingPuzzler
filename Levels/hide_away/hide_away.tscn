@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://becaryf00a30w" path="res://Levels/hide_away/level_polygon.tscn" id="2_kndbb"]
 
 [node name="Level" instance=ExtResource("1_m2y0p")]
+level_name = "Hide Away"
 
 [node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_kndbb")]
 position = Vector2(271, -29.9993)
