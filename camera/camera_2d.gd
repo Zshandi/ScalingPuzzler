@@ -1,6 +1,9 @@
 extends Camera2D
 
 @export
+var ball:Node2D
+
+@export
 var pan_max_speed:float = 50.0
 @export
 var pan_accel:float = 35.0
@@ -22,6 +25,12 @@ var panning_to_center_target := Vector2.ZERO
 var is_center_pan_locked:bool = false
 
 var current_center_pan_tween:Tween = null
+
+func _ready() -> void:
+	if ball == null:
+		ball = $"../Ball"
+	$CameraArea/CollisionShape2D.shape.size = get_viewport_rect().size
+	$CameraArea/CollisionShape2D.position = get_viewport_rect().size / 2
 
 func _process(delta: float) -> void:
 	
@@ -62,7 +71,7 @@ func adjust_pan_axis(pan_axis_val:float, pan_axis:int, delta:float):
 	pan_speed[pan_axis] = move_toward(pan_speed[pan_axis], target_speed, accel * delta)
 
 func get_ball_position():
-	return $"../Ball".global_position - get_viewport_rect().size / 2
+	return ball.global_position - get_viewport_rect().size / 2
 
 func pan_to_center(duration:float = pan_center_duration, ease:Tween.EaseType = Tween.EASE_IN_OUT):
 	if current_center_pan_tween != null:

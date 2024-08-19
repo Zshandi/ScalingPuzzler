@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://fpin2a268u0g"]
+
+[ext_resource type="Script" path="res://camera/camera_2d.gd" id="1_821ld"]
+[ext_resource type="Script" path="res://camera/circle_direction_indicator.gd" id="2_6b4am"]
+[ext_resource type="Texture2D" uid="uid://c37a8dwtp7mq" path="res://assets/gfx/arrow.png" id="3_g3sid"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyd0j"]
+
+[node name="Camera2D" type="Camera2D"]
+anchor_mode = 0
+script = ExtResource("1_821ld")
+
+[node name="CircleDirectionIndicator" type="Node2D" parent="."]
+script = ExtResource("2_6b4am")
+
+[node name="DirectionSprite" type="Sprite2D" parent="CircleDirectionIndicator"]
+position = Vector2(-60, 1.36424e-11)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_g3sid")
+
+[node name="CameraArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraArea"]
+shape = SubResource("RectangleShape2D_oyd0j")
+
+[connection signal="body_entered" from="CameraArea" to="CircleDirectionIndicator" method="_on_camera_area_body_entered"]
+[connection signal="body_exited" from="CameraArea" to="CircleDirectionIndicator" method="_on_camera_area_body_exited"]
