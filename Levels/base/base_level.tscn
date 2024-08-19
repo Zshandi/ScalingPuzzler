@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=11 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://controller.gd" id="1_wouat"]
@@ -8,6 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
 [ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera/camera.tscn" id="7_u76nt"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
+
+[sub_resource type="Gradient" id="Gradient_u4kg6"]
+offsets = PackedFloat32Array(0, 0.860215)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qhowr"]
+gradient = SubResource("Gradient_u4kg6")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4h24l")
@@ -33,3 +40,23 @@ stream = ExtResource("8_jt8gq")
 autoplay = true
 
 [node name="Camera2D" parent="." instance=ExtResource("7_u76nt")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TitleCard" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TitleCard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_qhowr")
