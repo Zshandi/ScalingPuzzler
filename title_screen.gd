@@ -1,7 +1,5 @@
 extends Control
 
-@export var scene_to_load_on_play: PackedScene
-
 var level_order: LevelOrder = preload("res://resources/level_order.tres")
 
 func _on_play_pressed() -> void:
