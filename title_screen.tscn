@@ -33,7 +33,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2e4oi")
-scene_to_load_on_play = ExtResource("2_yaipc")
+scene_to_load_on_play = ExtResource("2_r1qaw")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

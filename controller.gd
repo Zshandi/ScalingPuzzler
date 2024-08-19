@@ -64,10 +64,10 @@ func handle_scaling(delta):
 	
 	if Input.is_action_just_pressed("control_scale_up"):
 		target_scale += scale_step
-		scale_origin = get_viewport().get_mouse_position()
+		scale_origin = get_cursor_pos()
 	if Input.is_action_just_pressed("control_scale_down"):
 		target_scale -= scale_step
-		scale_origin = get_viewport().get_mouse_position()
+		scale_origin = get_cursor_pos()
 	
 	if target_scale != current_scale:
 		var target_scale_direction = 1 if target_scale > 0 else -1
@@ -102,7 +102,7 @@ var translate_origin_offset := Vector2.ZERO
 var translate_target := Vector2.ZERO
 
 func handle_translation(delta):
-	var cursor_pos := get_viewport().get_mouse_position()
+	var cursor_pos := get_cursor_pos()
 	var translate_current := transform_target.global_position
 	
 	if Input.is_action_pressed("control_translate_activate"):
@@ -141,3 +141,6 @@ func handle_translation(delta):
 
 func handle_rotation(delta):
 	pass
+
+func get_cursor_pos() -> Vector2:
+	return get_viewport().get_mouse_position() + get_viewport().get_camera_2d().global_position

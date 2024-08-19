@@ -15,8 +15,8 @@ func _ready():
 	var sprite_width = scrolling_sprite.texture.get_width()
 	var sprite_height = scrolling_sprite.texture.get_height()
 	
-	var width_scale_multiplier = floor((100.0 / sprite_width) * 15)
-	var height_scale_multiplier = floor((100.0 / sprite_height) * 15)
+	var width_scale_multiplier = floor((400.0 / sprite_width) * 15)
+	var height_scale_multiplier = floor((400.0 / sprite_height) * 15)
 
 	var size_to_use = Vector2(
 		sprite_width*width_scale_multiplier,
