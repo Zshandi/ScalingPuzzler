@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=9 format=3 uid="uid://c0ntj3kd7wjfy"]
 
+[ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://controller.gd" id="1_wouat"]
 [ext_resource type="Script" path="res://transformable.gd" id="2_q7yih"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="5_tgi00"]
@@ -9,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_4h24l")
 
 [node name="ControllingRoom" type="Node2D" parent="." node_paths=PackedStringArray("transform_target", "character")]
 position = Vector2(527, 321)

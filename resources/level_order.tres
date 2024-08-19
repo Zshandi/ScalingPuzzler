@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LevelOrder" load_steps=6 format=3 uid="uid://cv7o0q7q37ij5"]
+
+[ext_resource type="Script" path="res://resources/level_order_resource.gd" id="1_j7clg"]
+[ext_resource type="PackedScene" uid="uid://cqioay41yvrp5" path="res://Levels/first_level/first_level.tscn" id="1_to8er"]
+[ext_resource type="PackedScene" uid="uid://cmgxc0xfh0klv" path="res://Levels/beads/beads.tscn" id="2_h38dl"]
+[ext_resource type="PackedScene" uid="uid://bjnp1g5cb6c5b" path="res://Levels/hide_away/hide_away.tscn" id="3_2yyrq"]
+[ext_resource type="PackedScene" uid="uid://cnnjyhbjp0u2n" path="res://Levels/cone/cone.tscn" id="4_24blw"]
+
+[resource]
+script = ExtResource("1_j7clg")
+level_order = Array[PackedScene]([ExtResource("1_to8er"), ExtResource("2_h38dl"), ExtResource("3_2yyrq"), ExtResource("4_24blw")])
