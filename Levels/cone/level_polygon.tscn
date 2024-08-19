@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://mr8fo4wts5j8"]
+[gd_scene load_steps=3 format=3 uid="uid://mr8fo4wts5j8"]
 
 [ext_resource type="PackedScene" uid="uid://djvv2dg4xowfh" path="res://Levels/base/base_level_polygon.tscn" id="1_bise0"]
+[ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="2_dhlbn"]
 
 [node name="LevelPolygon" instance=ExtResource("1_bise0")]
 position = Vector2(-339, -12829)
@@ -9,3 +10,7 @@ polygon = PackedVector2Array(453, 985, 37838, 78784, 43911.1, 94939.8, 48041, 99
 
 [node name="Polygon2D" parent="." index="0"]
 visible = false
+
+[node name="Goal" parent="." index="1" instance=ExtResource("2_dhlbn")]
+position = Vector2(49599, 99920.5)
+scale = Vector2(0.0434675, 0.0609836)
