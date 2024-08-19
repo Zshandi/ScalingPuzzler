@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="5_tcym5"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="6_02fwp"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="7_8i2ys"]
-[ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera.tscn" id="9_mqo7u"]
+[ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera/camera.tscn" id="9_mqo7u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rvfl"]
 shader = ExtResource("3_rrem5")
@@ -46,4 +46,5 @@ background = ExtResource("6_02fwp")
 stream = ExtResource("7_8i2ys")
 autoplay = true
 
-[node name="Camera2D" parent="." instance=ExtResource("9_mqo7u")]
+[node name="Camera2D" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("9_mqo7u")]
+ball = NodePath("../Ball")
