@@ -111,7 +111,6 @@ func handle_translation(delta):
 		if !is_translating_pressed:
 			# Setup the offset to start with
 			translate_origin_offset = cursor_pos - transform_target.global_position
-			print_debug("translate_origin_offset: ", translate_origin_offset)
 			is_translating_pressed = true
 		
 		translate_target = cursor_pos
