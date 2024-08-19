@@ -11,17 +11,17 @@ var adjascent_wall_angle := PI * 0.9
 ## Note that this is based on current gravity and mass,
 ##  but was determined through testing
 @export
-var impulse_ping_threshold:float = 25
+var accel_ping_threshold:float = 25
 ## Impulse which corresponds to the max ping volume
 @export
-var impulse_ping_max:float = 150
+var accel_ping_max:float = 200
 
 @export
 ## Minimum ping volume gain, in Db
 var min_ping_gain:float = -10
 @export
 ## Maximum ping volume gain, in Db
-var max_ping_gain:float = 10
+var max_ping_gain:float = 15
 
 
 var is_between_walls:bool
@@ -46,22 +46,22 @@ func check_between_walls(character_state: PhysicsDirectBodyState2D) -> void:
 	
 	is_between_walls = max_angle > adjascent_wall_angle
 
+@onready
+var last_velocity := linear_velocity
+
 func process_ping_sound(character_state: PhysicsDirectBodyState2D) -> void:
-	var total_impulse := Vector2.ZERO
+	var accel_magnitude := (linear_velocity - last_velocity).length()
+	last_velocity = linear_velocity
 	
-	for i in range(0, character_state.get_contact_count()):
-		var impulse := character_state.get_contact_impulse(i)
-		total_impulse += impulse
-	
-	var impulse_magnitude := total_impulse.length()
-	
-	if impulse_magnitude > impulse_ping_threshold:
-		print_debug("impulse_magnitude: ", impulse_magnitude)
+	if accel_magnitude > accel_ping_threshold:
+		print_debug("accel_magnitude: ", accel_magnitude)
 		## Scale the value between threshold and max to be between 0 and 1
-		var progress := (impulse_magnitude - impulse_ping_threshold) / (impulse_ping_max - impulse_ping_threshold)
+		var progress := (accel_magnitude - accel_ping_threshold) / (accel_ping_max - accel_ping_threshold)
 		progress = clampf(progress, 0, 1)
 		
 		var ping_gain := lerpf(min_ping_gain, max_ping_gain, progress)
 		
+		$BounceStreamPlayer.volume_db = ping_gain
+		$BounceStreamPlayer.play()
 		print_debug("ping_gain: ", ping_gain)
 		
