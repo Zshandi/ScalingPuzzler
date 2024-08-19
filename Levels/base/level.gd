@@ -15,8 +15,6 @@ func _ready() -> void:
 		goal.connect("level_complete", _on_level_complete)
 		
 func _on_level_complete() -> void:
-	print("Going to next level.")
-	
 	var i = 0
 	var found = false
 	# Determine the next level
