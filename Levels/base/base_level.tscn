@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=14 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://controller.gd" id="1_wouat"]
@@ -15,6 +15,21 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_qhowr"]
 gradient = SubResource("Gradient_u4kg6")
+
+[sub_resource type="SystemFont" id="SystemFont_dfm6k"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ep43p"]
+font = SubResource("SystemFont_dfm6k")
+font_size = 76
+outline_size = 24
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0g80x"]
+font = SubResource("SystemFont_dfm6k")
+font_size = 53
+outline_size = 13
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4h24l")
@@ -60,3 +75,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_qhowr")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TitleCard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/TitleCard/MarginContainer"]
+layout_mode = 2
+
+[node name="LevelName" type="Label" parent="CanvasLayer/TitleCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "NAME OF LEVEL"
+label_settings = SubResource("LabelSettings_ep43p")
+horizontal_alignment = 1
+
+[node name="LevelDescription" type="Label" parent="CanvasLayer/TitleCard/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "DESCRIPTION OF LEVEL"
+label_settings = SubResource("LabelSettings_0g80x")
+horizontal_alignment = 1
