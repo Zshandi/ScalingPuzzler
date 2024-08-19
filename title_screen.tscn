@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://assets/gfx/prawndee.png" id="2_k05cd"]
 [ext_resource type="PackedScene" uid="uid://cqioay41yvrp5" path="res://Levels/first_level/first_level.tscn" id="2_srj4d"]
 
-[sub_resource type="SystemFont" id="SystemFont_sy7s8"]
+[sub_resource type="SystemFont" id="SystemFont_dwudh"]
 font_names = PackedStringArray("Droid Sans")
 
 [sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
-font = SubResource("SystemFont_sy7s8")
+font = SubResource("SystemFont_dwudh")
 font_size = 40
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
