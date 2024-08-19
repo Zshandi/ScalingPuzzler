@@ -54,14 +54,21 @@ func process_ping_sound(character_state: PhysicsDirectBodyState2D) -> void:
 	last_velocity = linear_velocity
 	
 	if accel_magnitude > accel_ping_threshold:
-		print_debug("accel_magnitude: ", accel_magnitude)
 		## Scale the value between threshold and max to be between 0 and 1
 		var progress := (accel_magnitude - accel_ping_threshold) / (accel_ping_max - accel_ping_threshold)
 		progress = clampf(progress, 0, 1)
 		
 		var ping_gain := lerpf(min_ping_gain, max_ping_gain, progress)
 		
-		$BounceStreamPlayer.volume_db = ping_gain
-		$BounceStreamPlayer.play()
-		print_debug("ping_gain: ", ping_gain)
+		# Create instance of bounce stream player
+		# Having separate instances for each play allows for their ring to overlap,
+		#  so when one plays it doesn't cut off the previous one
+		var stream_player = preload("res://assets/sfx/bounce_stream_player.tscn").instantiate()
+		add_child(stream_player)
+		stream_player.owner = get_tree().root
 		
+		stream_player.volume_db = ping_gain
+		stream_player.play()
+		
+		# Make sure we remove the player after, so no memory leak
+		stream_player.finished.connect(func(): stream_player.queue_free())

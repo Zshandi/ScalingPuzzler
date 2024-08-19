@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlf776tpkdhig"]
+
+[ext_resource type="AudioStream" uid="uid://btyvnka0r8cp8" path="res://assets/sfx/bounce.wav" id="1_5pqg7"]
+
+[node name="BounceStreamPlayer" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_5pqg7")
+attenuation = 0.535886
