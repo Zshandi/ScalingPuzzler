@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://chg1aq00iqvy1"]
+[gd_scene load_steps=4 format=3 uid="uid://chg1aq00iqvy1"]
 
 [ext_resource type="Script" path="res://goal.gd" id="1_67fba"]
+[ext_resource type="Texture2D" uid="uid://cumqcyhpatawc" path="res://assets/gfx/goal.png" id="2_1duq5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s6h6y"]
 size = Vector2(35, 35)
@@ -16,6 +17,10 @@ debug_color = Color(0.969541, 0, 0.460675, 0.42)
 unique_name_in_owner = true
 wait_time = 2.0
 one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_1duq5")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
