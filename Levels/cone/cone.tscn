@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://mr8fo4wts5j8" path="res://Levels/cone/level_polygon.tscn" id="2_fs36p"]
 
 [node name="Level" instance=ExtResource("1_v0wre")]
+level_name = "Cone"
 
 [node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_fs36p")]
 position = Vector2(267, 136.001)

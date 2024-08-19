@@ -25,6 +25,10 @@ window/size/window_width_override=1152
 window/size/window_height_override=648
 window/stretch/mode="viewport"
 
+[global_group]
+
+goal_group=""
+
 [input]
 
 control_scale_up={
