@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://mr8fo4wts5j8"]
+
+[ext_resource type="PackedScene" uid="uid://djvv2dg4xowfh" path="res://Levels/base/base_level_polygon.tscn" id="1_bise0"]
+
+[node name="LevelPolygon" instance=ExtResource("1_bise0")]
+position = Vector2(-339, -12829)
+scale = Vector2(2.025, 2.025)
+polygon = PackedVector2Array(453, 985, 37838, 78784, 43911.1, 94939.8, 48041, 99290.9, 49340.9, 99919.4, 49599.5, 99920.5, 49599.5, 99920, 49348.3, 99904.6, 48075.6, 99271.1, 44227.7, 94886.4, 38478, 78577, 3288, 360, 1346, 601, 1132, -1435, 6912, -1482, 40920, 51492, 61912, 100900, 66433.1, 172440, 56024, 192292, 32472, 185124, 29912, 166820, 30424, 116644, 21336, 74788, 6104, 38180, -2600, 16420, -3481, 2306, -2062, -1357, 1125, -1467, 1345, 599)
+
+[node name="Polygon2D" parent="." index="0"]
+visible = false
