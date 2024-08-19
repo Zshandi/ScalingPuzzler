@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqioay41yvrp5"]
+
+[ext_resource type="PackedScene" uid="uid://c0ntj3kd7wjfy" path="res://Levels/base/base_level.tscn" id="1_h4j2g"]
+[ext_resource type="PackedScene" uid="uid://dmg3gln5y6u12" path="res://Levels/first_level/first_level_polygon_1.tscn" id="2_k4sqf"]
+[ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="3_3kyim"]
+
+[node name="Level" instance=ExtResource("1_h4j2g")]
+
+[node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_k4sqf")]
+
+[node name="Goal" parent="ControllingRoom/ScalableRoomInner" index="1" instance=ExtResource("3_3kyim")]
+position = Vector2(-19.9993, -265)
+scale = Vector2(5.16, 4.84)

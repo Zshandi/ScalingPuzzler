@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://becaryf00a30w"]
+
+[ext_resource type="PackedScene" uid="uid://djvv2dg4xowfh" path="res://Levels/base/base_level_polygon.tscn" id="1_j2qni"]
+[ext_resource type="Shader" path="res://Levels/level_collision.gdshader" id="2_m33fw"]
+[ext_resource type="Texture2D" uid="uid://b57ge3epwfwkb" path="res://assets/backgrounds/tile_20x20.png" id="3_l77wc"]
+[ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="4_yboia"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m53se"]
+shader = ExtResource("2_m33fw")
+shader_parameter/texture_size = Vector2(75, 75)
+shader_parameter/modulate_color = Vector4(3.36, 1.47, -0.5, 1)
+shader_parameter/texture_albedo = ExtResource("3_l77wc")
+
+[node name="LevelPolygon" instance=ExtResource("1_j2qni")]
+scale = Vector2(20, 20)
+polygon = PackedVector2Array(-584, 101, 1401, 66, 1334, -911, 486, -1027, 509, -859, 1130, -772, 1244, -48, 1109.7, -45.2, 1107.8, -47.2, 1047.2, -46.7, 1043.6, -45.7, 1107.6, -46.1, 1108, -45, 1100.9, -44.8, 1100.15, -44.534, 1100.2, -44.35, 1100, -44.35, 1100.1, -44.55, 1100.3, -44.6, 1100.9, -44.85, 1102.1, -44.9, 1102.1, -44.95, 1100.25, -44.85, 1098.05, -44.8768, -377, -38, -117, -736, 509, -859, 486, -1014, -338, -929, -712, 9)
+
+[node name="Polygon2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_m53se")
+polygon = PackedVector2Array(-584, 101, 1401, 66, 1334, -911, 486, -1027, 509, -859, 1130, -772, 1244, -48, 1109.7, -45.2, 1107.8, -47.2, 1047.2, -46.7, 1043.6, -45.7, 1107.6, -46.1, 1108, -45, 1100.9, -44.8, 1100.15, -44.534, 1100.2, -44.35, 1100, -44.35, 1100.1, -44.55, 1100.3, -44.6, 1100.9, -44.85, 1102.1, -44.9, 1102.1, -44.95, 1100.25, -44.85, 1098.05, -44.8768, -377, -38, -117, -736, 509, -859, 486, -1014, -338, -929, -712, 9)
+
+[node name="Goal" parent="." index="1" instance=ExtResource("4_yboia")]
+position = Vector2(1100.1, -44.4)
+scale = Vector2(0.00566057, 0.00347202)
