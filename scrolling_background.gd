@@ -3,7 +3,7 @@ extends ParallaxBackground
 @export
 var background: Texture2D
 @export
-var scrolling_speed: Vector2 = Vector2(50,50)
+var scrolling_speed: Vector2 = Vector2(0,0)
 
 @onready var scrolling_sprite = $ParallaxLayer/Sprite2D
 @onready var parallax_layer = $ParallaxLayer
