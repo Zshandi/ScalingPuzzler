@@ -16,12 +16,19 @@ var accel_ping_threshold:float = 25
 @export
 var accel_ping_max:float = 200
 
-@export
 ## Minimum ping volume gain, in Db
-var min_ping_gain:float = -10
 @export
+var min_ping_gain:float = -10
 ## Maximum ping volume gain, in Db
-var max_ping_gain:float = 15
+@export
+var max_ping_gain:float = -3
+
+## Minimum ping pitch scale
+@export
+var min_ping_pitch:float = 0.8
+## Maximum ping pitch scale
+@export
+var max_ping_pitch:float = 1.2
 
 
 var is_between_walls:bool
@@ -60,6 +67,8 @@ func process_ping_sound(character_state: PhysicsDirectBodyState2D) -> void:
 		
 		var ping_gain := lerpf(min_ping_gain, max_ping_gain, progress)
 		
+		var ping_pitch := randf_range(min_ping_pitch, max_ping_pitch)
+		
 		# Create instance of bounce stream player
 		# Having separate instances for each play allows for their ring to overlap,
 		#  so when one plays it doesn't cut off the previous one
@@ -68,6 +77,7 @@ func process_ping_sound(character_state: PhysicsDirectBodyState2D) -> void:
 		stream_player.owner = get_tree().root
 		
 		stream_player.volume_db = ping_gain
+		stream_player.pitch_scale = ping_pitch
 		stream_player.play()
 		
 		# Make sure we remove the player after, so no memory leak
