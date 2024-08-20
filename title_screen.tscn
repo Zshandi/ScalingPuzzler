@@ -1,14 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://em5gstufmnb1"]
+[gd_scene load_steps=9 format=3 uid="uid://em5gstufmnb1"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
-[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://assets/gfx/prawndee.png" id="2_k05cd"]
+[ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="2_vc276"]
+[ext_resource type="Texture2D" uid="uid://c7a24ave710iq" path="res://assets/gfx/GameImage.png" id="2_y37rn"]
+[ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_nognn"]
 
 [sub_resource type="SystemFont" id="SystemFont_dwudh"]
 font_names = PackedStringArray("Droid Sans")
 
 [sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
 font = SubResource("SystemFont_dwudh")
-font_size = 40
+font_size = 65
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 11
@@ -20,8 +22,8 @@ font_names = PackedStringArray("Droid Sans")
 font_weight = 750
 
 [sub_resource type="LabelSettings" id="LabelSettings_y4xq8"]
-font_size = 22
-outline_size = 6
+font_size = 32
+outline_size = 11
 outline_color = Color(0, 0, 0, 1)
 
 [node name="TitleScreen" type="Control"]
@@ -33,7 +35,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2e4oi")
 
+[node name="ScrollingBackground" parent="." instance=ExtResource("2_vc276")]
+background = ExtResource("3_nognn")
+scrolling_speed = Vector2(50, 0)
+
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,7 +71,7 @@ theme_override_constants/separation = 45
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Untitled Scaling Puzzler"
+text = "Super Small Ball"
 label_settings = SubResource("LabelSettings_jnk7w")
 horizontal_alignment = 1
 
@@ -101,7 +108,7 @@ theme_override_constants/separation = 10
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("2_k05cd")
+texture = ExtResource("2_y37rn")
 expand_mode = 3
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
