@@ -13,7 +13,7 @@ config_version=5
 config/name="ScalingPuzzler"
 run/main_scene="res://title_screen.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://assets/gfx/ball.png"
 
 [display]
 
