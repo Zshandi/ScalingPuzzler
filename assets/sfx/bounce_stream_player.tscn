@@ -5,3 +5,4 @@
 [node name="BounceStreamPlayer" type="AudioStreamPlayer2D"]
 stream = ExtResource("1_5pqg7")
 attenuation = 0.535886
+bus = &"SFX"
