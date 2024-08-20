@@ -34,6 +34,7 @@ background = ExtResource("7_hwag8")
 stream = ExtResource("8_jt8gq")
 volume_db = -6.0
 autoplay = true
+bus = &"Music"
 
 [node name="Camera2D" parent="." instance=ExtResource("7_u76nt")]
 

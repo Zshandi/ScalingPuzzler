@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bbupyh3fpswig"]
+[gd_scene load_steps=10 format=3 uid="uid://bbupyh3fpswig"]
 
-[ext_resource type="Script" path="res://title_screen.gd" id="1_asay6"]
+[ext_resource type="Script" path="res://settings_menu.gd" id="1_wc3ll"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="2_f8ryy"]
 [ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_i2ytm"]
+[ext_resource type="LabelSettings" uid="uid://0mhwhs6306g4" path="res://assets/fonts/menu_font.tres" id="4_5oyqd"]
 [ext_resource type="Texture2D" uid="uid://c7a24ave710iq" path="res://assets/gfx/GameImage.png" id="4_ukc6g"]
+[ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="6_1jf0m"]
 
 [sub_resource type="SystemFont" id="SystemFont_dwudh"]
 font_names = PackedStringArray("Droid Sans")
@@ -17,23 +19,19 @@ shadow_size = 11
 shadow_color = Color(0, 0, 0, 0.360784)
 shadow_offset = Vector2(5.13, 2.395)
 
-[sub_resource type="SystemFont" id="SystemFont_r8ju1"]
-font_names = PackedStringArray("Droid Sans")
-font_weight = 750
-
 [sub_resource type="LabelSettings" id="LabelSettings_y4xq8"]
 font_size = 32
 outline_size = 11
 outline_color = Color(0, 0, 0, 1)
 
-[node name="TitleScreen" type="Control"]
+[node name="Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_asay6")
+script = ExtResource("1_wc3ll")
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("2_f8ryy")]
 background = ExtResource("3_i2ytm")
@@ -80,23 +78,37 @@ layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 30
 
-[node name="Play" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+[node name="FullscreenButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_r8ju1")
-theme_override_font_sizes/font_size = 31
-text = "Play"
+theme_override_font_sizes/font_size = 36
+text = "Toggle Fullscreen"
 
-[node name="Settings" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_r8ju1")
-theme_override_font_sizes/font_size = 31
-text = "Settings"
+text = "Music Volume"
+label_settings = ExtResource("4_5oyqd")
+horizontal_alignment = 1
 
-[node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+[node name="VolumeSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_r8ju1")
-theme_override_font_sizes/font_size = 31
-text = "Quit"
+max_value = 1.0
+step = 0.01
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sound Effects"
+label_settings = ExtResource("4_5oyqd")
+horizontal_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Back"
 
 [node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -117,6 +129,12 @@ size_flags_vertical = 3
 texture = ExtResource("4_ukc6g")
 expand_mode = 3
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1jf0m")
+autoplay = true
+bus = &"Music"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/FullscreenButton" to="." method="_on_fullscreen_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
