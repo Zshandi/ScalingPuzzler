@@ -10,7 +10,7 @@ font_names = PackedStringArray("Droid Sans")
 
 [sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
 font = SubResource("SystemFont_dwudh")
-font_size = 40
+font_size = 65
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 11
@@ -71,7 +71,7 @@ theme_override_constants/separation = 45
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Untitled Scaling Puzzler"
+text = "Super Small Ball"
 label_settings = SubResource("LabelSettings_jnk7w")
 horizontal_alignment = 1
 
