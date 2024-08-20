@@ -47,13 +47,22 @@ var translation_line_color := Color.WHITE
 @export
 var translation_line_width:float = 3.0
 
+@export
+var translation_min_distance:float = 70
+@export
+var translation_max_distance:float = 500
+@export
+var translation_min_force:float = 400
+@export
+var translation_max_force:float = 1000
+
 var translate_line:CappedLine
 var is_between_walls:bool
 
 func _ready():
 	translate_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
 	translate_line.visible = false
-	get_tree().root.add_child(translate_line)
+	$CollisionShape2D.add_child(translate_line)
 	translate_line.owner = get_tree().root
 	
 	target_scale = get_current_linear_scale()
@@ -69,9 +78,10 @@ func _physics_process(delta):
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 	check_between_walls(character_state)
 
+var normals : Array[Vector2] = []
 func check_between_walls(character_state: PhysicsDirectBodyState2D) -> void:
 	var max_angle := 0.0
-	var normals : Array[Vector2] = []
+	normals = []
 	
 	for i in range(0, character_state.get_contact_count()):
 		var normal = character_state.get_contact_local_normal(i)
@@ -158,7 +168,29 @@ func handle_scaling(delta:float) -> void:
 		camera.zoom /= scale_by
 
 func handle_translation(delta:float) -> void:
-	pass
+	var ball_radius = $CollisionShape2D.shape.radius
+	if Input.is_action_pressed("control_translate_activate"):
+		var cursor_pos := get_cursor_pos()
+		var center_to_cursor_local:Vector2 = (cursor_pos - global_position) / $CollisionShape2D.scale
+		
+		var dist := center_to_cursor_local.length()
+		dist = clampf(dist, translation_min_distance, translation_max_distance)
+		center_to_cursor_local = center_to_cursor_local.normalized() * dist
+		
+		var dist_normalized := (dist - translation_min_distance) / (translation_max_distance - translation_min_distance)
+		var force_magnitude := lerpf(translation_min_force, translation_max_force, dist_normalized)
+		var force = center_to_cursor_local.normalized() * force_magnitude
+		if force.y < 0: force.y *= 2
+		force *= $CollisionShape2D.scale
+		apply_force(force)
+		
+		translate_line.from = center_to_cursor_local.normalized() * (translation_min_distance - 10)
+		translate_line.to = center_to_cursor_local
+		translate_line.rotation = -rotation
+		translate_line.visible = true
+		print_debug("translate_line.to.length(): ", translate_line.to.length())
+	else:
+		translate_line.visible = false
 
 func handle_rotation(delta:float) -> void:
 	pass
@@ -166,3 +198,6 @@ func handle_rotation(delta:float) -> void:
 # Utility helper function, may want to move to static library
 func based_log(base:float = 10, x:float = 10) -> float:
 	return (log(x) / log(base))
+
+func get_cursor_pos() -> Vector2:
+	return get_global_mouse_position()
