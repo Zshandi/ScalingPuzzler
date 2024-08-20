@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddh231cpl6faq"]
+
+[ext_resource type="PackedScene" uid="uid://c0ntj3kd7wjfy" path="res://Levels/base/base_level.tscn" id="1_6xmia"]
+[ext_resource type="PackedScene" uid="uid://bnlnmm5dn7od1" path="res://Levels/rooms/level_polygon.tscn" id="2_mnd86"]
+
+[node name="Level" instance=ExtResource("1_6xmia")]
+
+[node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_mnd86")]
+position = Vector2(33.9997, 122)
+scale = Vector2(-0.495, -0.495)
