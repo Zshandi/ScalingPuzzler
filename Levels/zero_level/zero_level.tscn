@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://2k2jlf0hxqbo"]
+
+[ext_resource type="PackedScene" uid="uid://c0ntj3kd7wjfy" path="res://Levels/base/base_level.tscn" id="1_njso2"]
+[ext_resource type="PackedScene" uid="uid://dbu7mlipaf0ia" path="res://Levels/zero_level/level_polygon.tscn" id="2_7n861"]
+
+[node name="Level" instance=ExtResource("1_njso2")]
+level_name = "Beginnings"
+level_hint = "Getting Started"
+
+[node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_7n861")]
+position = Vector2(-124, 46.9997)
+scale = Vector2(-0.875, -0.875)

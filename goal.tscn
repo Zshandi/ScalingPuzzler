@@ -15,7 +15,6 @@ debug_color = Color(0.969541, 0, 0.460675, 0.42)
 
 [node name="Timer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 2.0
 one_shot = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
