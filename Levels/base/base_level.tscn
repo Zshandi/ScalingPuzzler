@@ -1,8 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=8 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
-[ext_resource type="Script" path="res://controller.gd" id="1_wouat"]
-[ext_resource type="Script" path="res://transformable.gd" id="2_q7yih"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="5_tgi00"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="6_45bhn"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
@@ -14,15 +12,11 @@
 script = ExtResource("1_4h24l")
 level_name = "Base Level"
 
-[node name="ControllingRoom" type="Node2D" parent="." node_paths=PackedStringArray("transform_target", "character")]
+[node name="ControllingRoom" type="Node2D" parent="."]
 position = Vector2(527, 321)
-script = ExtResource("1_wouat")
-transform_target = NodePath("ScalableRoomInner")
-character = NodePath("../Ball")
 
 [node name="ScalableRoomInner" type="StaticBody2D" parent="ControllingRoom"]
 rotation = 3.14159
-script = ExtResource("2_q7yih")
 
 [node name="Ball" parent="." instance=ExtResource("5_tgi00")]
 position = Vector2(358, 256)

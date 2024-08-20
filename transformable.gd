@@ -1,9 +1,6 @@
 extends Node2D
 class_name Transformable
 
-# Utility helper function, may want to move to static library
-func based_log(base:float = 10, x:float = 10) -> float:
-	return (log(x) / log(base))
 
 func get_current_linear_scale(axis:int = Vector2.AXIS_X) -> float:
 	return based_log(2, global_transform.get_scale()[axis])
