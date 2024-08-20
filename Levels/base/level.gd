@@ -29,5 +29,9 @@ func _on_level_complete() -> void:
 	if found:
 		if i >= len(level_order.level_order) - 1:
 			get_tree().change_scene_to_file("res://title_screen.tscn")
+			Settings.current_level = 0
+			Settings.persist_save_data()
 		else:
+			Settings.current_level = i+1
+			Settings.persist_save_data()
 			get_tree().change_scene_to_packed(level_order.level_order[i+1])

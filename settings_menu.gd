@@ -41,3 +41,8 @@ func _ready() -> void:
 	sfx_index = AudioServer.get_bus_index("SFX")
 	volume_slider.value = Settings.music_volume
 	sfx_slider.value = Settings.sound_fx_volume
+
+
+func _on_clear_save_pressed() -> void:
+	Settings.current_level = 0
+	Settings.persist_save_data()

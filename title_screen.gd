@@ -6,7 +6,7 @@ func _ready() -> void:
 	Settings.load_save_data()
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_packed(level_order.level_order[0])
+	get_tree().change_scene_to_packed(level_order.level_order[Settings.current_level])
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
