@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmgxc0xfh0klv"]
+[gd_scene load_steps=4 format=3 uid="uid://cmgxc0xfh0klv"]
 
 [ext_resource type="PackedScene" uid="uid://c0ntj3kd7wjfy" path="res://Levels/base/base_level.tscn" id="1_lniq8"]
 [ext_resource type="PackedScene" uid="uid://bkkh8vbuu87fd" path="res://Levels/beads/level_polygon.tscn" id="2_4y1rr"]
+[ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_e13pw"]
 
 [node name="Level" instance=ExtResource("1_lniq8")]
 level_name = "Drops"
@@ -10,3 +11,6 @@ level_hint = "Bit by bit"
 [node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_4y1rr")]
 position = Vector2(163, 9.00041)
 scale = Vector2(-0.79, -0.79)
+
+[node name="ScrollingBackground" parent="." index="2"]
+background = ExtResource("3_e13pw")
