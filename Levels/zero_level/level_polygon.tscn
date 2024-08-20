@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbu7mlipaf0ia"]
+[gd_scene load_steps=4 format=3 uid="uid://dbu7mlipaf0ia"]
 
 [ext_resource type="PackedScene" uid="uid://djvv2dg4xowfh" path="res://Levels/base/base_level_polygon.tscn" id="1_w6fjy"]
 [ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="2_bfwiw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6mexk"]
+font_size = 59
+outline_size = 25
+outline_color = Color(0, 0, 0, 1)
 
 [node name="LevelPolygon" instance=ExtResource("1_w6fjy")]
 polygon = PackedVector2Array(-379, -287, -424, 99, 588, 99, 591, -313, 136, -293, 141, -415, 684, -432, 655, 165, -511, 156, -488, -403, 141, -414, 136, -293)
@@ -12,3 +17,12 @@ polygon = PackedVector2Array(-379, -287, -424, 99, 588, 99, 591, -313, 136, -293
 [node name="Goal" parent="." index="1" instance=ExtResource("2_bfwiw")]
 position = Vector2(496, 11)
 scale = Vector2(4.82665, 4.65549)
+
+[node name="Label" type="Label" parent="." index="2"]
+offset_left = -173.0
+offset_top = -219.0
+offset_right = -29.0
+offset_bottom = -196.0
+rotation = -0.0628319
+text = "Left Click and Drag"
+label_settings = SubResource("LabelSettings_6mexk")

@@ -1,9 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmg3gln5y6u12"]
+[gd_scene load_steps=3 format=3 uid="uid://dmg3gln5y6u12"]
 
 [ext_resource type="PackedScene" uid="uid://djvv2dg4xowfh" path="res://Levels/base/base_level_polygon.tscn" id="1_jb4e8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fmu38"]
+font_size = 30
+outline_size = 14
+outline_color = Color(0, 0, 0, 1)
 
 [node name="LevelPolygon" instance=ExtResource("1_jb4e8")]
 polygon = PackedVector2Array(214, 43, 3, -33, 6, -146, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -19, -149, -20, -33, -198, 45, -272, 182.999, 2.99957, 182, -1.00061, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
 
 [node name="Polygon2D" parent="." index="0"]
 polygon = PackedVector2Array(214, 43, 3, -33, 6, -146, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -19, -149, -20, -33, -198, 45, -272, 182.999, 2.99957, 182, -1.00061, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
+
+[node name="Label" type="Label" parent="." index="1"]
+offset_left = 152.0
+offset_top = 179.0
+offset_right = 491.0
+offset_bottom = 221.0
+rotation = 3.20442
+text = "Mouse Wheel Up/Down"
+label_settings = SubResource("LabelSettings_fmu38")
