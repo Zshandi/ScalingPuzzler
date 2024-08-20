@@ -1,14 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://em5gstufmnb1"]
+[gd_scene load_steps=7 format=3 uid="uid://em5gstufmnb1"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
 [ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://assets/gfx/prawndee.png" id="2_k05cd"]
-[ext_resource type="PackedScene" uid="uid://cqioay41yvrp5" path="res://Levels/first_level/first_level.tscn" id="2_srj4d"]
 
-[sub_resource type="SystemFont" id="SystemFont_sy7s8"]
+[sub_resource type="SystemFont" id="SystemFont_dwudh"]
 font_names = PackedStringArray("Droid Sans")
 
 [sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
-font = SubResource("SystemFont_sy7s8")
+font = SubResource("SystemFont_dwudh")
 font_size = 40
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
@@ -33,7 +32,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2e4oi")
-scene_to_load_on_play = ExtResource("2_srj4d")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -66,14 +64,14 @@ theme_override_constants/separation = 45
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Cool Game Zshandi Wanted
-To Make :)"
+text = "Untitled Scaling Puzzler"
 label_settings = SubResource("LabelSettings_jnk7w")
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+theme_override_constants/separation = 30
 
 [node name="Play" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -89,7 +87,9 @@ text = "Quit"
 
 [node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Created by Tayo"
+text = "Created by
+Cameron Smith &
+Zshandi Krahn"
 label_settings = SubResource("LabelSettings_y4xq8")
 horizontal_alignment = 1
 
