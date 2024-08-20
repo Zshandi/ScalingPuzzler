@@ -74,7 +74,8 @@ func adjust_pan_axis(pan_axis_val:float, pan_axis:int, delta:float):
 	pan_speed[pan_axis] = move_toward(pan_speed[pan_axis], target_speed, accel * delta)
 
 func get_ball_position():
-	return ball.global_position - get_viewport_rect().size / 2
+	var viewport_center_offset = get_viewport_rect().size / 2
+	return ball.global_position - viewport_center_offset / zoom
 
 func pan_to_center(duration:float = pan_center_duration, ease:Tween.EaseType = Tween.EASE_IN_OUT):
 	if current_center_pan_tween != null:

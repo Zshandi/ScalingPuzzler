@@ -150,6 +150,10 @@ func handle_scaling(delta:float) -> void:
 		
 		for child in get_children():
 			child.transform = child.transform.scaled(scale_by_vec)
+		
+		var camera = get_viewport().get_camera_2d()
+		
+		camera.zoom /= scale_by
 
 func handle_translation(delta:float) -> void:
 	pass
