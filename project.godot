@@ -15,6 +15,10 @@ run/main_scene="res://title_screen.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://assets/gfx/ball.png"
 
+[autoload]
+
+Settings="*res://settings.gd"
+
 [display]
 
 window/size/viewport_width=1920

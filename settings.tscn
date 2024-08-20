@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://em5gstufmnb1"]
+[gd_scene load_steps=9 format=3 uid="uid://bbupyh3fpswig"]
 
-[ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
-[ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="2_vc276"]
-[ext_resource type="Texture2D" uid="uid://c7a24ave710iq" path="res://assets/gfx/GameImage.png" id="2_y37rn"]
-[ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_nognn"]
+[ext_resource type="Script" path="res://title_screen.gd" id="1_asay6"]
+[ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="2_f8ryy"]
+[ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_i2ytm"]
+[ext_resource type="Texture2D" uid="uid://c7a24ave710iq" path="res://assets/gfx/GameImage.png" id="4_ukc6g"]
 
 [sub_resource type="SystemFont" id="SystemFont_dwudh"]
 font_names = PackedStringArray("Droid Sans")
@@ -33,10 +33,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_2e4oi")
+script = ExtResource("1_asay6")
 
-[node name="ScrollingBackground" parent="." instance=ExtResource("2_vc276")]
-background = ExtResource("3_nognn")
+[node name="ScrollingBackground" parent="." instance=ExtResource("2_f8ryy")]
+background = ExtResource("3_i2ytm")
 scrolling_speed = Vector2(50, 0)
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -114,7 +114,7 @@ theme_override_constants/separation = 10
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("2_y37rn")
+texture = ExtResource("4_ukc6g")
 expand_mode = 3
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
