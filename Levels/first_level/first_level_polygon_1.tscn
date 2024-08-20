@@ -14,10 +14,11 @@ polygon = PackedVector2Array(214, 43, 3, -33, 6, -146, 104, -151, 104.001, -352,
 polygon = PackedVector2Array(214, 43, 3, -33, 6, -146, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -19, -149, -20, -33, -198, 45, -272, 182.999, 2.99957, 182, -1.00061, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
 
 [node name="Label" type="Label" parent="." index="1"]
-offset_left = 152.0
-offset_top = 179.0
-offset_right = 491.0
-offset_bottom = 221.0
+offset_left = 876.0
+offset_top = 410.0
+offset_right = 1215.0
+offset_bottom = 452.0
 rotation = 3.20442
+scale = Vector2(1.59, 1.59)
 text = "Mouse Wheel Up/Down"
 label_settings = SubResource("LabelSettings_fmu38")
