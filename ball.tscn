@@ -16,14 +16,16 @@ script = ExtResource("1_5rywv")
 scale = Vector2(4.09627, 4.09627)
 shape = SubResource("CircleShape2D_t8nkm")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites"]
 scale = Vector2(0.405, 0.405)
 texture = ExtResource("1_5pmax")
 
-[node name="ShineNode" type="Node2D" parent="."]
+[node name="ShineNode" type="Node2D" parent="Sprites"]
 script = ExtResource("2_oj4ny")
 
-[node name="Sprite2D" type="Sprite2D" parent="ShineNode"]
+[node name="Sprite2D" type="Sprite2D" parent="Sprites/ShineNode"]
 position = Vector2(0.211238, 0.071228)
 scale = Vector2(0.410062, 0.400712)
 texture = ExtResource("3_t8mnw")

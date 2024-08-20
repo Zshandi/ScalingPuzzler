@@ -1,13 +1,13 @@
 extends Node2D
 
-@export
 ## The amount scaled per scroll
-var scale_step := 0.3
 @export
+var scale_step := 0.3
 ## The strength of the scale smoothing
 ## Note that this corresponds to an exponential decay from the current scale to the target,
 ##  meaning it is not really an exact speed, but rather just determines how steep the decay is,
 ##  but the exact speed will be dependent on the current distance to the target
+@export
 var scale_strength := 5.0
 @export
 var max_scale_speed := 0.2
@@ -51,9 +51,10 @@ func _ready():
 	translate_line.owner = get_tree().root
 
 func _physics_process(delta):
-	handle_scaling(delta)
-	handle_translation(delta)
-	handle_rotation(delta)
+	pass
+	#handle_scaling(delta)
+	#handle_translation(delta)
+	#handle_rotation(delta)
 
 var target_scale:float = 0.0
 var scale_direction:int = 0

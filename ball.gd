@@ -30,14 +30,44 @@ var min_ping_pitch:float = 0.8
 @export
 var max_ping_pitch:float = 1.2
 
+## The amount scaled per scroll
+@export
+var scale_step := 0.3
+## The strength of the scale smoothing
+## Note that this corresponds to an exponential decay from the current scale to the target,
+##  meaning it is not really an exact speed, but rather just determines how steep the decay is,
+##  but the exact speed will be dependent on the current distance to the target
+@export
+var scale_strength := 5.0
+@export
+var max_scale_speed := 0.2
 
+@export
+var translation_line_color := Color.WHITE
+@export
+var translation_line_width:float = 3.0
+
+var translate_line:CappedLine
 var is_between_walls:bool
+
+func _ready():
+	translate_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
+	translate_line.visible = false
+	get_tree().root.add_child(translate_line)
+	translate_line.owner = get_tree().root
+	
+	target_scale = get_current_linear_scale()
+
+func _physics_process(delta):
+	handle_scaling(delta)
+	handle_translation(delta)
+	handle_rotation(delta)
+	
+	process_ping_sound()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 	check_between_walls(character_state)
-	process_ping_sound(character_state)
-	
 
 func check_between_walls(character_state: PhysicsDirectBodyState2D) -> void:
 	var max_angle := 0.0
@@ -56,7 +86,7 @@ func check_between_walls(character_state: PhysicsDirectBodyState2D) -> void:
 @onready
 var last_velocity := linear_velocity
 
-func process_ping_sound(character_state: PhysicsDirectBodyState2D) -> void:
+func process_ping_sound() -> void:
 	var accel_magnitude := (linear_velocity - last_velocity).length()
 	last_velocity = linear_velocity
 	
@@ -82,3 +112,51 @@ func process_ping_sound(character_state: PhysicsDirectBodyState2D) -> void:
 		
 		# Make sure we remove the player after, so no memory leak
 		stream_player.finished.connect(func(): stream_player.queue_free())
+
+var target_scale:float = 0.0
+var scale_origin := Vector2.ZERO
+
+func get_current_linear_scale():
+	return based_log(2, $CollisionShape2D.transform.get_scale().length())
+
+func handle_scaling(delta:float) -> void:
+	var current_scale:float = get_current_linear_scale()
+	scale_origin = get_viewport().get_camera_2d().get_screen_center_position()
+	
+	if Input.is_action_just_pressed("control_scale_up"):
+		target_scale -= scale_step
+	if Input.is_action_just_pressed("control_scale_down"):
+		target_scale += scale_step
+	
+	if target_scale != current_scale:
+		var target_scale_direction = 1 if target_scale > 0 else -1
+		
+		# Get new scale (exp decay to target)
+		var scale_to := lerpf(current_scale, target_scale, delta * scale_strength)
+		
+		if is_between_walls && target_scale - current_scale < 0:
+			scale_to = current_scale
+			target_scale = current_scale
+		
+		# Scale to that scale
+		var scale_by_linear := scale_to - current_scale
+		
+		# Limit scaling speed
+		scale_by_linear = max(-max_scale_speed, scale_by_linear)
+		scale_by_linear = min(max_scale_speed, scale_by_linear)
+		
+		var scale_by := pow(2, scale_by_linear)
+		var scale_by_vec := Vector2(scale_by, scale_by)
+		
+		for child in get_children():
+			child.transform = child.transform.scaled(scale_by_vec)
+
+func handle_translation(delta:float) -> void:
+	pass
+
+func handle_rotation(delta:float) -> void:
+	pass
+
+# Utility helper function, may want to move to static library
+func based_log(base:float = 10, x:float = 10) -> float:
+	return (log(x) / log(base))
