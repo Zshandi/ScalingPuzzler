@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=10 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://controller.gd" id="1_wouat"]
@@ -8,9 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
 [ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera/camera.tscn" id="7_u76nt"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
+[ext_resource type="PackedScene" uid="uid://ccx1vbth7yagu" path="res://Levels/base/title_card.tscn" id="9_s653q"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4h24l")
+level_name = "Base Level"
 
 [node name="ControllingRoom" type="Node2D" parent="." node_paths=PackedStringArray("transform_target", "character")]
 position = Vector2(527, 321)
@@ -34,3 +36,8 @@ volume_db = -6.0
 autoplay = true
 
 [node name="Camera2D" parent="." instance=ExtResource("7_u76nt")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TitleCard" parent="CanvasLayer" instance=ExtResource("9_s653q")]
+visible = false
