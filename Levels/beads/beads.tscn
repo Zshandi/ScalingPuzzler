@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bkkh8vbuu87fd" path="res://Levels/beads/level_polygon.tscn" id="2_4y1rr"]
 
 [node name="Level" instance=ExtResource("1_lniq8")]
-level_name = "Beads"
+level_name = "Drops"
+level_hint = "Bit by bit"
 
 [node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_4y1rr")]
 position = Vector2(163, 9.00041)

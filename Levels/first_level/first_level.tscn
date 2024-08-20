@@ -6,6 +6,7 @@
 
 [node name="Level" instance=ExtResource("1_h4j2g")]
 level_name = "Beginnings"
+level_hint = "Getting Started"
 
 [node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_k4sqf")]
 

@@ -5,6 +5,7 @@
 
 [node name="Level" instance=ExtResource("1_m2y0p")]
 level_name = "Hide Away"
+level_hint = "Discovery"
 
 [node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_kndbb")]
 position = Vector2(271, -29.9993)
