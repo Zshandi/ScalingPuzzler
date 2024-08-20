@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	if is_center_pan_locked:
 		if is_panning_to_center:
 			if panning_to_center_target.distance_squared_to(get_ball_position()) > pan_center_lock_threshold ** 2:
-				var time_remaining = pan_center_duration - current_center_pan_tween.get_total_elapsed_time()
+				time_remaining -= current_center_pan_tween.get_total_elapsed_time()
 				pan_to_center(time_remaining, Tween.EASE_OUT)
 		else:
 			global_position = get_ball_position()
@@ -76,12 +76,12 @@ func adjust_pan_axis(pan_axis_val:float, pan_axis:int, delta:float):
 func get_ball_position():
 	var viewport_center_offset = get_viewport_rect().size / 2
 	return ball.global_position - viewport_center_offset / zoom
-
+var time_remaining := 0.0
 func pan_to_center(duration:float = pan_center_duration, ease:Tween.EaseType = Tween.EASE_IN_OUT):
 	if current_center_pan_tween != null:
 		current_center_pan_tween.stop()
 	is_panning_to_center = true
-	
+	time_remaining = duration
 	panning_to_center_target = get_ball_position()
 	
 	current_center_pan_tween = create_tween()

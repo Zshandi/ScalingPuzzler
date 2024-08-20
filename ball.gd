@@ -32,7 +32,7 @@ var max_ping_pitch:float = 1.2
 
 ## The amount scaled per scroll
 @export
-var scale_step := 0.3
+var scale_step := 0.25
 ## The strength of the scale smoothing
 ## Note that this corresponds to an exponential decay from the current scale to the target,
 ##  meaning it is not really an exact speed, but rather just determines how steep the decay is,
@@ -52,9 +52,14 @@ var translation_min_distance:float = 70
 @export
 var translation_max_distance:float = 500
 @export
-var translation_min_force:float = 400
+var translation_min_force:float = 200
 @export
-var translation_max_force:float = 1000
+var translation_max_force:float = 800
+
+@export
+var translation_upward_boost = 1200
+@export
+var translation_upward_boost_duration = 1
 
 var translate_line:CappedLine
 var is_between_walls:bool
@@ -81,7 +86,7 @@ func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 var normals : Array[Vector2] = []
 func check_between_walls(character_state: PhysicsDirectBodyState2D) -> void:
 	var max_angle := 0.0
-	normals = []
+	normals.clear()
 	
 	for i in range(0, character_state.get_contact_count()):
 		var normal = character_state.get_contact_local_normal(i)
@@ -129,14 +134,20 @@ var scale_origin := Vector2.ZERO
 func get_current_linear_scale():
 	return based_log(2, $CollisionShape2D.transform.get_scale().length())
 
+var min_scale := -13.2
+var max_scale := 1.2
+
 func handle_scaling(delta:float) -> void:
 	var current_scale:float = get_current_linear_scale()
 	scale_origin = get_viewport().get_camera_2d().get_screen_center_position()
 	
 	if Input.is_action_just_pressed("control_scale_up"):
 		target_scale -= scale_step
+		print_debug("target_scale: ", target_scale)
 	if Input.is_action_just_pressed("control_scale_down"):
 		target_scale += scale_step
+		print_debug("target_scale: ", target_scale)
+	target_scale = clampf(target_scale, min_scale, max_scale)
 	
 	if target_scale != current_scale:
 		var target_scale_direction = 1 if target_scale > 0 else -1
@@ -167,6 +178,8 @@ func handle_scaling(delta:float) -> void:
 		
 		camera.zoom /= scale_by
 
+var upward_boost_remaining:float = 0.0
+
 func handle_translation(delta:float) -> void:
 	var ball_radius = $CollisionShape2D.shape.radius
 	if Input.is_action_pressed("control_translate_activate"):
@@ -180,7 +193,23 @@ func handle_translation(delta:float) -> void:
 		var dist_normalized := (dist - translation_min_distance) / (translation_max_distance - translation_min_distance)
 		var force_magnitude := lerpf(translation_min_force, translation_max_force, dist_normalized)
 		var force = center_to_cursor_local.normalized() * force_magnitude
-		if force.y < 0: force.y *= 2
+		
+		# Apply boost if on floor
+		var is_on_floor := false
+		for normal in normals:
+			if abs(normal.angle_to(Vector2.UP)) < PI/4:
+				is_on_floor = true
+				break
+		if is_on_floor:
+			upward_boost_remaining = translation_upward_boost_duration
+		elif upward_boost_remaining > 0:
+			upward_boost_remaining -= delta
+		if true:#upward_boost_remaining > 0 && center_to_cursor_local.y < 0:
+			var boost_magnitude:float = lerpf(0, translation_upward_boost, dist_normalized) * (upward_boost_remaining / translation_upward_boost_duration) ** 2
+			var boost_total := center_to_cursor_local.normalized() * boost_magnitude
+			var boost_upward := boost_total.project(Vector2.UP)
+			force += boost_upward
+		
 		force *= $CollisionShape2D.scale
 		apply_force(force)
 		
@@ -188,7 +217,6 @@ func handle_translation(delta:float) -> void:
 		translate_line.to = center_to_cursor_local
 		translate_line.rotation = -rotation
 		translate_line.visible = true
-		print_debug("translate_line.to.length(): ", translate_line.to.length())
 	else:
 		translate_line.visible = false
 
