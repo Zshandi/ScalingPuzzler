@@ -134,7 +134,8 @@ func handle_scaling(delta:float) -> void:
 		# Get new scale (exp decay to target)
 		var scale_to := lerpf(current_scale, target_scale, delta * scale_strength)
 		
-		if is_between_walls && target_scale - current_scale < 0:
+		# Prevent scaling ball up if between walls
+		if is_between_walls && target_scale - current_scale > 0:
 			scale_to = current_scale
 			target_scale = current_scale
 		
@@ -150,6 +151,7 @@ func handle_scaling(delta:float) -> void:
 		
 		for child in get_children():
 			child.transform = child.transform.scaled(scale_by_vec)
+		gravity_scale *= scale_by
 		
 		var camera = get_viewport().get_camera_2d()
 		
