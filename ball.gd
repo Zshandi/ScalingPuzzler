@@ -21,7 +21,7 @@ var accel_ping_max:float = 200
 var min_ping_gain:float = -10
 ## Maximum ping volume gain, in Db
 @export
-var max_ping_gain:float = -3
+var max_ping_gain:float = 5
 
 ## Minimum ping pitch scale
 @export

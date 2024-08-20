@@ -1,0 +1,127 @@
+[gd_scene load_steps=12 format=3 uid="uid://ba43yo31wyw7b"]
+
+[ext_resource type="Script" path="res://game_complete.gd" id="1_22l25"]
+[ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="2_d2178"]
+[ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_v0mtn"]
+[ext_resource type="Texture2D" uid="uid://c7a24ave710iq" path="res://assets/gfx/GameImage.png" id="4_t02hp"]
+[ext_resource type="AudioStream" uid="uid://8urk2lmhou7p" path="res://assets/sfx/applause.wav" id="5_vew2y"]
+
+[sub_resource type="SystemFont" id="SystemFont_dwudh"]
+font_names = PackedStringArray("Droid Sans")
+
+[sub_resource type="LabelSettings" id="LabelSettings_lljnj"]
+font = SubResource("SystemFont_dwudh")
+font_size = 65
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 11
+shadow_color = Color(0, 0, 0, 0.360784)
+shadow_offset = Vector2(5.13, 2.395)
+
+[sub_resource type="SystemFont" id="SystemFont_q7ofa"]
+font_names = PackedStringArray("Droid Sans")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
+font = SubResource("SystemFont_q7ofa")
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_pi1ni"]
+font_size = 32
+outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_r8ju1"]
+font_names = PackedStringArray("Droid Sans")
+font_weight = 750
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_22l25")
+
+[node name="ScrollingBackground" parent="." instance=ExtResource("2_d2178")]
+background = ExtResource("3_v0mtn")
+scrolling_speed = Vector2(50, 0)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.470588, 1, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 120
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 120
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_constants/separation = 45
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Thanks for Playing!"
+label_settings = SubResource("LabelSettings_lljnj")
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "That's all we have for now, but we might continue working on this. Please let us know what you think and check back for updates!"
+label_settings = SubResource("LabelSettings_jnk7w")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Created by
+Cameron Smith &
+Zshandi Krahn"
+label_settings = SubResource("LabelSettings_pi1ni")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 30
+
+[node name="Return" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_r8ju1")
+theme_override_font_sizes/font_size = 31
+text = "Return to Title"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("4_t02hp")
+expand_mode = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_vew2y")
+autoplay = true
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Return" to="." method="_on_return_pressed"]

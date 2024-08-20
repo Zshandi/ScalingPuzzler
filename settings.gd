@@ -1,7 +1,7 @@
 extends Node
 
 var music_volume: float = 1
-var sound_fx_volume: float = 1
+var sound_fx_volume: float = 0.8
 
 var toggle_fullscreen: int = DisplayServer.WINDOW_MODE_WINDOWED
 
@@ -38,6 +38,9 @@ func persist_save_data() -> void:
 func load_save_data() -> void:
 	if !FileAccess.file_exists("user://save_data"):
 		# If the game has not yet been saved, leave values as default
+		set_music_volume()
+		set_sfx_volume()
+		set_fullscreen()
 		return
 	
 	var save_file := FileAccess.open("user://save_data", FileAccess.READ)

@@ -28,7 +28,7 @@ func _on_level_complete() -> void:
 	
 	if found:
 		if i >= len(level_order.level_order) - 1:
-			get_tree().change_scene_to_file("res://title_screen.tscn")
+			get_tree().change_scene_to_file("res://game_complete.tscn")
 			Settings.current_level = 0
 			Settings.persist_save_data()
 		else:
