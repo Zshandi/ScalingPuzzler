@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbgmdt2wu2j78"]
+
+[ext_resource type="PackedScene" uid="uid://c0ntj3kd7wjfy" path="res://Levels/base/base_level.tscn" id="1_xcg3g"]
+[ext_resource type="PackedScene" uid="uid://dy8ykp2husvjf" path="res://Levels/zero_two_level/level_polygon.tscn" id="2_bvdjq"]
+
+[node name="Level" instance=ExtResource("1_xcg3g")]
+level_name = "Slide"
+level_hint = "My name is Kyle"
+
+[node name="LevelPolygon" parent="ControllingRoom/ScalableRoomInner" index="0" instance=ExtResource("2_bvdjq")]
+position = Vector2(-650.999, -277.002)
+scale = Vector2(-4.02, -4.02)
+polygon = PackedVector2Array(-129, -61, -36, -48, 155, 18, 253, 132, 320, 343, 322, 432, 254, 435, 259, 525, 457, 522, 456, 436, 343, 433, 344, 338, 279, 120, 214, -4, -41, -123, -269, -106, -262.438, -78.8564, -292, -85, -299, -153, 52, -181, 317, -24, 426, 123, 410, 376, 552, 439, 515, 596, 210, 604, 130, 500, 230, 406, 275, 376, 218, 171, 161, 89, 41, -6, -192, -27, -237, -43, -286, -65, -292, -87, -262.438, -78.8564)

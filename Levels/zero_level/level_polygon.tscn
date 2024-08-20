@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbu7mlipaf0ia"]
+
+[ext_resource type="PackedScene" uid="uid://djvv2dg4xowfh" path="res://Levels/base/base_level_polygon.tscn" id="1_w6fjy"]
+[ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="2_bfwiw"]
+
+[node name="LevelPolygon" instance=ExtResource("1_w6fjy")]
+polygon = PackedVector2Array(-379, -287, -424, 99, 588, 99, 591, -313, 136, -293, 141, -415, 684, -432, 655, 165, -511, 156, -488, -403, 141, -414, 136, -293)
+
+[node name="Polygon2D" parent="." index="0"]
+polygon = PackedVector2Array(-379, -287, -424, 99, 588, 99, 591, -313, 136, -293, 141, -415, 684, -432, 655, 165, -511, 156, -488, -403, 141, -414, 136, -293)
+
+[node name="Goal" parent="." index="1" instance=ExtResource("2_bfwiw")]
+position = Vector2(496, 11)
+scale = Vector2(4.82665, 4.65549)
