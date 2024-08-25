@@ -13,7 +13,11 @@ uniform vec4 color4 : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 uniform float scale : hint_range(0.0, 15.0) = 1.0;
 
+global uniform bool antialiasing_enabled;
+
 uniform int sample_density = 6;
+
+varying flat int sample_dens;
 
 varying vec2 world_position;
 varying vec2 world_scale;
@@ -92,7 +96,7 @@ vec4 sample_color(vec2 position, float tile_size2) {
 }
 
 vec2 get_pixel_offset(int x, int y) {
-	float sample_distance = 2.0/float(sample_density) * scale;
+	float sample_distance = 2.0/float(sample_dens) * scale;
 	float xf = float(x) * sample_distance;
 	float yf = float(y) * sample_distance;
 	return vec2(xf, yf);
@@ -105,13 +109,18 @@ void fragment() {
 	vec4 color = vec4(0.0);
 	int num_samples = 0;
 	
-	for (int x = 0; x < sample_density; x++) {
-		for (int y = 0; y < sample_density; y++) {
+	sample_dens = sample_density;
+	if (!antialiasing_enabled) {
+		sample_dens = 1;
+	}
+	
+	for (int x = 0; x < sample_dens; x++) {
+		for (int y = 0; y < sample_dens; y++) {
 			vec2 offset = get_pixel_offset(x, y);
 			color += sample_color(world_position + offset, tile_size2);
 			num_samples++;
 		}
 	}
 	color /= float(num_samples);
-	COLOR = color;//vec4(vec3(point_size/3.0), 1.0);
+	COLOR = color;
 }
