@@ -91,18 +91,10 @@ vec4 sample_color(vec2 position, float tile_size2) {
 	}
 }
 
-float random (vec2 uv) {
-    return fract(sin(dot(uv.xy, vec2(12.9898, 4.1414))) * 43758.5453);
-}
-
-vec2 get_pixel_offset(int x, int y, vec2 uv) {
-	float sample_distance = 1.0/float(sample_density) * scale;
-	float rand_x_offset = 0.0;
-	float rand_y_offset = 0.0;
-	//rand_x_offset = random(uv) * sample_distance;
-	//rand_y_offset = random(uv) * sample_distance;
-	float xf = float(x) * sample_distance + rand_x_offset;
-	float yf = float(y) * sample_distance + rand_y_offset;
+vec2 get_pixel_offset(int x, int y) {
+	float sample_distance = 2.0/float(sample_density) * scale;
+	float xf = float(x) * sample_distance;
+	float yf = float(y) * sample_distance;
 	return vec2(xf, yf);
 }
 
@@ -115,7 +107,7 @@ void fragment() {
 	
 	for (int x = 0; x < sample_density; x++) {
 		for (int y = 0; y < sample_density; y++) {
-			vec2 offset = get_pixel_offset(x, y, world_position);
+			vec2 offset = get_pixel_offset(x, y);
 			color += sample_color(world_position + offset, tile_size2);
 			num_samples++;
 		}
