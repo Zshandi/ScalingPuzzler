@@ -1,21 +1,56 @@
 shader_type canvas_item;
 
-// the size of the checker tiling (2 squares)
+group_uniforms Sizing;
+/**
+ * The size of the outer checker tiling (2 squares width)
+ */
 uniform float tile_size = 20.0;
-// the number of checker tilings within the outer tiling
+/**
+ * The number of checker tilings within the outer tiling
+ * The size of these inner tiles will be tile_size / tiles_within
+ */
 uniform int tiles_within = 20;
-// custom color modulation
+
+group_uniforms OuterTile1;
+/**
+ * Color of the first inner tile, within the first outer tile.
+ * Together with color2 will make up the average of the first outer tile.
+ */
 uniform vec4 color1 : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+/**
+ * Color of the second inner tile, within the first outer tile.
+ * Together with color1 will make up the average of the first outer tile.
+ */
 uniform vec4 color2 : source_color = vec4(0.3, 0.3, 0.3, 1.0);
-// custom color modulation
+
+group_uniforms OuterTile2;
+/**
+ * Color of the first inner tile, within the second outer tile.
+ * Together with color4 will make up the average of the second outer tile.
+ */
 uniform vec4 color3 : source_color = vec4(0.7, 0.7, 0.7, 1.0);
+/**
+ * Color of the second inner tile, within the second outer tile.
+ * Together with color3 will make up the average of the second outer tile.
+ */
 uniform vec4 color4 : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 
+group_uniforms Antialiasing;
+
+/**
+ * The number of antialiasing samples per 2-pixel square,
+ *  averaged to get the final color of the pixel.
+ */
+uniform int sample_density = 6;
+
+group_uniforms SetViaScript;
+/**
+ * The current scale from camera to global transform.
+ * Used to determine the global pixel size for antialiasing and color averaging.
+ */
 uniform float scale : hint_range(0.0, 15.0) = 1.0;
 
 global uniform bool antialiasing_enabled;
-
-uniform int sample_density = 6;
 
 varying flat int sample_dens;
 
