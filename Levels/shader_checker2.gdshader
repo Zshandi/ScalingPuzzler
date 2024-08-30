@@ -66,27 +66,14 @@ void vertex() {
 	canvas_scale = length((inverse(CANVAS_MATRIX) * vec4(1.0)).xy);
 }
 
-vec2 get_uv(vec2 position, float tile_size_param) {
-	vec2 uv = position.xy / tile_size_param;
-    uv = fract(uv);
-	if (uv.x < 0.0) {
-		uv.x += 1.0;
-	}
-	if (uv.y < 0.0) {
-		uv.y += 1.0;
-	}
-	return uv;
-}
-
+// Samples a checker pattern at the given position
+// checker_size is the size of the repeating checker tile (2x2 checker pattern)
+// color_a & color_b are the 2 colors to get checker pattern value for
 vec4 sample_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 color_b) {
 	vec2 uv = position.xy / checker_size;
-    uv = fract(uv);
-	if (uv.x < 0.0) {
-		uv.x += 1.0;
-	}
-	if (uv.y < 0.0) {
-		uv.y += 1.0;
-	}
+	// Essentially mod 1, but works for negatives
+    uv = uv - floor(uv);
+	
     vec4 color = color_a;
 	if ((uv.x > 0.5) != (uv.y > 0.5)){
 		color = color_b;
@@ -94,39 +81,34 @@ vec4 sample_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 
 	return color;
 }
 
-vec4 sample_color_avg(vec2 position, float checker_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
-	vec4 color_a = (color_1 + color_2) / 2.0;
-	vec4 color_b = (color_3 + color_4) / 2.0;
+// Gices either a checker sample, average of the 2 colors, or combination of both,
+//  depending on the calculated size of the tile in pixels
+// checker_size is the size of the checker tile (2x2 checker pattern)
+// color_a & color_b are the 2 colors to either average or get checker pattern value for
+// lower_pixel_size_threshold determines the tile size in pixels at which it is fully average
+// lower_pixel_size_threshold determines the tile size in pixels at which it is fully checkered
+vec4 sample_checker_dynamic(vec2 position, float checker_size, vec4 color_a, vec4 color_b) {
+	// Will be fully averaged at this checker size
+	const float lower_pixel_size_threshold = 2.0;
+	// Will be fully averaged at this checker size
+	const float upper_pixel_size_threshold = 10.0;
 	
-	return sample_color_checker(position, checker_size, color_a, color_b);
-}
-
-vec4 sample_color_full(vec2 position, float outer_tile_size, float inner_tile_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
-	// Get smaller checker values
-	vec4 color_a = sample_color_checker(position, inner_tile_size, color1, color2);
-	vec4 color_b = sample_color_checker(position, inner_tile_size, color3, color4);
-	
-	// Then combine them in bigger checker
-	return sample_color_checker(position, outer_tile_size, color_a, color_b);
-}
-
-vec4 sample_color(vec2 position, float outer_tile_size, float inner_tile_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
-	float tile_2_size_pixels = inner_tile_size / scale;
+	float tile_size_pixels = checker_size / scale;
 	
 	vec4 color_avg;
 	vec4 color_full;
-	if (tile_2_size_pixels < 10.0) {
-		color_avg = sample_color_avg(position, outer_tile_size, color_1, color_2, color_3, color_4);
+	if (tile_size_pixels < upper_pixel_size_threshold) {
+		color_avg = (color_a + color_b) / lower_pixel_size_threshold;
 	}
-	if (tile_2_size_pixels >= 2.0) {
-		color_full = sample_color_full(position, outer_tile_size, inner_tile_size, color_1, color_2, color_3, color_4);
+	if (tile_size_pixels >= lower_pixel_size_threshold) {
+		color_full = sample_color_checker(position, checker_size, color_a, color_b);
 	}
 	
-	if (tile_2_size_pixels < 2.0) {
+	if (tile_size_pixels < lower_pixel_size_threshold) {
 		return color_avg;
 	}
-	else if (tile_2_size_pixels < 10.0) {
-		float full_contribution = (tile_2_size_pixels - 2.0) / 10.0;
+	else if (tile_size_pixels < upper_pixel_size_threshold) {
+		float full_contribution = (tile_size_pixels - lower_pixel_size_threshold) / upper_pixel_size_threshold;
 		float avg_contribution = 1.0 - full_contribution;
 		return color_full * full_contribution  +  color_avg * avg_contribution;
 	}
@@ -135,6 +117,19 @@ vec4 sample_color(vec2 position, float outer_tile_size, float inner_tile_size, v
 	}
 }
 
+// Samples the color at the given position
+vec4 sample_color(vec2 position, float outer_tile_size, float inner_tile_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
+	// Get smaller checker values
+	vec4 color_a = sample_checker_dynamic(position, inner_tile_size, color1, color2);
+	vec4 color_b = sample_checker_dynamic(position, inner_tile_size, color3, color4);
+	
+	// Then combine them in bigger checker
+	return sample_checker_dynamic(position, outer_tile_size, color_a, color_b);
+}
+
+// Get pixel offset for anti-aliasing sample
+// x is the x index (0 to num_samples)
+// y is the y index (0 to num_samples)
 vec2 get_pixel_offset(int x, int y) {
 	float sample_distance = 2.0/float(sample_dens) * scale;
 	float xf = float(x) * sample_distance;
