@@ -79,7 +79,7 @@ vec2 get_uv(vec2 position, float tile_size_param) {
 }
 
 vec4 sample_color_avg(vec2 position) {
-	vec2 uv = world_position.xy / tile_size;
+	vec2 uv = position.xy / tile_size;
     uv = fract(uv);
 	if (uv.x < 0.0) {
 		uv.x += 1.0;
