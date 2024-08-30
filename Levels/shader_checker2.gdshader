@@ -78,8 +78,8 @@ vec2 get_uv(vec2 position, float tile_size_param) {
 	return uv;
 }
 
-vec4 sample_color_avg(vec2 position) {
-	vec2 uv = position.xy / tile_size;
+vec4 sample_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 color_b) {
+	vec2 uv = position.xy / checker_size;
     uv = fract(uv);
 	if (uv.x < 0.0) {
 		uv.x += 1.0;
@@ -87,46 +87,51 @@ vec4 sample_color_avg(vec2 position) {
 	if (uv.y < 0.0) {
 		uv.y += 1.0;
 	}
-    vec4 color = (color1 + color2) / 2.0;
+    vec4 color = color_a;
 	if ((uv.x > 0.5) != (uv.y > 0.5)){
-		color = (color3 + color4) / 2.0;
+		color = color_b;
 	}
 	return color;
 }
 
-vec4 sample_color_full(vec2 position, float tile_size2) {
-    vec2 uv = get_uv(position, tile_size);
-    vec2 uv2 = get_uv(position, tile_size2);
+vec4 sample_color_avg(vec2 position, float checker_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
+	vec4 color_a = (color_1 + color_2) / 2.0;
+	vec4 color_b = (color_3 + color_4) / 2.0;
 	
-    vec4 color = color1;
-	if ((uv.x > 0.5) != (uv.y > 0.5)){
-		color = color3;
-	}
-	if ((uv2.x > 0.5) != (uv2.y > 0.5)){
-		if (color == color1) {
-			color = color2;
-		}
-		else {
-			color = color4;
-		}
-	}
-	return color;
+	return sample_color_checker(position, checker_size, color_a, color_b);
 }
 
-vec4 sample_color(vec2 position, float tile_size2) {
-	float tile_2_size_pixels = tile_size2 / scale;
+vec4 sample_color_full(vec2 position, float outer_tile_size, float inner_tile_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
+	// Get smaller checker values
+	vec4 color_a = sample_color_checker(position, inner_tile_size, color1, color2);
+	vec4 color_b = sample_color_checker(position, inner_tile_size, color3, color4);
+	
+	// Then combine them in bigger checker
+	return sample_color_checker(position, outer_tile_size, color_a, color_b);
+}
+
+vec4 sample_color(vec2 position, float outer_tile_size, float inner_tile_size, vec4 color_1, vec4 color_2, vec4 color_3, vec4 color_4) {
+	float tile_2_size_pixels = inner_tile_size / scale;
+	
+	vec4 color_avg;
+	vec4 color_full;
+	if (tile_2_size_pixels < 10.0) {
+		color_avg = sample_color_avg(position, outer_tile_size, color_1, color_2, color_3, color_4);
+	}
+	if (tile_2_size_pixels >= 2.0) {
+		color_full = sample_color_full(position, outer_tile_size, inner_tile_size, color_1, color_2, color_3, color_4);
+	}
+	
 	if (tile_2_size_pixels < 2.0) {
-		return sample_color_avg(position);
+		return color_avg;
 	}
 	else if (tile_2_size_pixels < 10.0) {
 		float full_contribution = (tile_2_size_pixels - 2.0) / 10.0;
 		float avg_contribution = 1.0 - full_contribution;
-		vec4 color = sample_color_full(position, tile_size2) * full_contribution;
-		color += sample_color_avg(position) * avg_contribution;
-		return color;
+		return color_full * full_contribution  +  color_avg * avg_contribution;
 	}
 	else {
-		return sample_color_full(position, tile_size2);
+		return color_full;
 	}
 }
 
@@ -152,7 +157,7 @@ void fragment() {
 	for (int x = 0; x < sample_dens; x++) {
 		for (int y = 0; y < sample_dens; y++) {
 			vec2 offset = get_pixel_offset(x, y);
-			color += sample_color(world_position + offset, tile_size2);
+			color += sample_color(world_position + offset, tile_size, tile_size2, color1, color2, color3, color4);
 			num_samples++;
 		}
 	}
