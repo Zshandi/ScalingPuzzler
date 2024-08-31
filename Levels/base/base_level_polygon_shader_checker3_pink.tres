@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cbtwqxhmff2ry"]
+
+[ext_resource type="Shader" path="res://Levels/shader_checker3.gdshader" id="1_t51fq"]
+
+[resource]
+shader = ExtResource("1_t51fq")
+shader_parameter/tile_size = 20.0
+shader_parameter/tiles_within = 20
+shader_parameter/color1_1 = Color(1, 0.666667, 1, 1)
+shader_parameter/color1_2 = Color(1, 0.156863, 1, 1)
+shader_parameter/color2_1 = Color(0.121569, 0.133333, 0.662745, 1)
+shader_parameter/color2_2 = Color(0.905882, 0.133333, 0.662745, 1)
+shader_parameter/color3_1 = Color(0.886275, 0.419608, 0.992157, 1)
+shader_parameter/color3_2 = Color(0.886275, 0.968627, 0.992157, 1)
+shader_parameter/color4_1 = Color(0.901961, 0.556863, 0.878431, 1)
+shader_parameter/color4_2 = Color(0.117647, 0.00784314, 0.878431, 1)
+shader_parameter/sample_density = 10
+shader_parameter/scale = 1.0
