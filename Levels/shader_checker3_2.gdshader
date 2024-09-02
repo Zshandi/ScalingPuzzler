@@ -108,27 +108,24 @@ vec4 sample_checker_dynamic(vec2 position, float checker_size, vec4 color_a, vec
 	}
 }
 
+vec4 sample_depth(int depth, vec2 position, float depth_zero_size, vec4 color_a, vec4 color_b, out float contribution) {
+	float tile_size_x = depth_zero_size / pow(float(tiles_within), float(depth));
+	
+	return sample_checker_dynamic(position, tile_size_x, color1, color2, contribution);
+}
+
 // This is currently a somewhat limited implementation,
 //  and should be replaced with a recursive call to allow for unlimited tiling
 vec4 sample_complete(vec2 position) {
-	float tile_size2 = tile_size / float(tiles_within);
-	float tile_size3 = tile_size2 / float(tiles_within);
-	
 	float total_contribution = 0.0;
 	vec4 total_color = vec4(0.0);
 	
 	float contrib_to_add = 0.0;
-	// Get smallest checker values
-	total_color += sample_checker_dynamic(position, tile_size3, color1, color2, contrib_to_add);
-	total_contribution += contrib_to_add;
 	
-	// Get smaller checker values
-	total_color += sample_checker_dynamic(position, tile_size2, color1, color2, contrib_to_add);
-	total_contribution += contrib_to_add;
-	
-	// Then combine them in bigger checker
-	total_color += sample_checker_dynamic(position, tile_size, color1, color2, contrib_to_add);
-	total_contribution += contrib_to_add;
+	for (int i = -1; i <= 3; i++) {
+		total_color += sample_depth(i, position, tile_size, color1, color2, contrib_to_add);
+		total_contribution += contrib_to_add;
+	}
 	
 	return total_color / total_contribution;
 }
