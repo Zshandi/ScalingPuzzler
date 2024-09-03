@@ -70,22 +70,20 @@ vec4 sample_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 
 	return color;
 }
 
+// Will have no contribution below this
+const float fade_in_lower_threshold = 2.0;
+// Will have full contribution above this (but below the fade out)
+const float fade_in_upper_threshold = 10.0;
+// Will have full contribution below this (but above the fade in)
+const float fade_out_lower_threshold = 500.0;
+// Will have no contribution above this
+const float fade_out_upper_threshold = 6000.0;
+
 // Gices either a checker sample, average of the 2 colors, or combination of both,
 //  depending on the calculated size of the tile in pixels
 // checker_size is the size of the checker tile (2x2 checker pattern)
 // color_a & color_b are the 2 colors to either average or get checker pattern value for
-// lower_pixel_size_threshold determines the tile size in pixels at which it is fully average
-// lower_pixel_size_threshold determines the tile size in pixels at which it is fully checkered
 vec4 sample_checker_dynamic(vec2 position, float checker_size, vec4 color_a, vec4 color_b, out float contribution) {
-	// Will be fully averaged at this checker size
-	const float fade_in_lower_threshold = 2.0;
-	// Will be fully averaged at this checker size
-	const float fade_in_upper_threshold = 10.0;
-	// Will be fully averaged at this checker size
-	const float fade_out_lower_threshold = 500.0;
-	// Will be fully averaged at this checker size
-	const float fade_out_upper_threshold = 6000.0;
-	
 	float tile_size_pixels = checker_size / scale;
 	
 	vec4 color = sample_color_checker(position, checker_size, color_a, color_b);
@@ -114,6 +112,24 @@ vec4 sample_depth(int depth, vec2 position, float depth_zero_size, vec4 color_a,
 	return sample_checker_dynamic(position, tile_size_x, color1, color2, contribution);
 }
 
+float based_log(float base, float x) {
+	return (log(x) / log(base));
+}
+
+int get_highest_contributing_depth(float depth_zero_size) {
+	float smallest_tile_size = fade_in_lower_threshold * scale;
+	float depth = based_log(float(tiles_within), depth_zero_size / smallest_tile_size);
+	depth = ceil(depth);
+	return int(depth);
+}
+
+int get_lowest_contributing_depth(float depth_zero_size) {
+	float biggest_tile_size = fade_out_upper_threshold * scale;
+	float depth = based_log(float(tiles_within), depth_zero_size / biggest_tile_size);
+	depth = ceil(depth);
+	return int(depth);
+}
+
 // This is currently a somewhat limited implementation,
 //  and should be replaced with a recursive call to allow for unlimited tiling
 vec4 sample_complete(vec2 position) {
@@ -122,7 +138,10 @@ vec4 sample_complete(vec2 position) {
 	
 	float contrib_to_add = 0.0;
 	
-	for (int i = -1; i <= 3; i++) {
+	int from = get_lowest_contributing_depth(tile_size);
+	int to = get_highest_contributing_depth(tile_size);
+	
+	for (int i = from; i <= to; i++) {
 		total_color += sample_depth(i, position, tile_size, color1, color2, contrib_to_add);
 		total_contribution += contrib_to_add;
 	}
