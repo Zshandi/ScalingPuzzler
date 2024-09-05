@@ -39,20 +39,30 @@ group_uniforms SetViaScript;
  */
 uniform float scale : hint_range(0.0, 15.0) = 1.0;
 
+varying float scale_total;
+
 global uniform bool antialiasing_enabled;
 
 varying flat int sample_dens;
 
-varying vec2 world_position;
-varying vec2 world_scale;
-varying float canvas_scale;
+varying vec2 local_position;
+varying vec2 local_scale;
 
-varying vec2 screen_pixel_size;
+vec3 scale_of(mat4 transform) {
+	float scale_x = length(vec3(transform[0][0], transform[0][1], transform[0][2]));
+	float scale_y = length(vec3(transform[1][0], transform[1][1], transform[1][2]));
+	float scale_z = length(vec3(transform[2][0], transform[2][1], transform[2][2]));
+	return vec3(scale_x, scale_y, scale_z);
+}
+
+vec2 scale2d_of(mat4 transform) {
+	return scale_of(transform).xy;
+}
 
 void vertex() {
-	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0, 1.0)).xy;
-	world_scale = (MODEL_MATRIX * vec4(1.0)).xy;
-	canvas_scale = length((inverse(CANVAS_MATRIX) * vec4(1.0)).xy);
+	local_scale = scale2d_of(inverse(MODEL_MATRIX));
+	scale_total = scale * length(local_scale);
+	local_position = VERTEX;
 }
 
 // Samples a checker pattern at the given position
@@ -84,7 +94,7 @@ const float fade_out_upper_threshold = 6000.0;
 // checker_size is the size of the checker tile (2x2 checker pattern)
 // color_a & color_b are the 2 colors to either average or get checker pattern value for
 vec4 sample_checker_dynamic(vec2 position, float checker_size, vec4 color_a, vec4 color_b, out float contribution) {
-	float tile_size_pixels = checker_size / scale;
+	float tile_size_pixels = checker_size / scale_total;
 	
 	vec4 color = sample_color_checker(position, checker_size, color_a, color_b);
 	
@@ -117,14 +127,14 @@ float based_log(float base, float x) {
 }
 
 int get_highest_contributing_depth(float depth_zero_size) {
-	float smallest_tile_size = fade_in_lower_threshold * scale;
+	float smallest_tile_size = fade_in_lower_threshold * scale_total;
 	float depth = based_log(float(tiles_within), depth_zero_size / smallest_tile_size);
 	depth = ceil(depth);
 	return int(depth);
 }
 
 int get_lowest_contributing_depth(float depth_zero_size) {
-	float biggest_tile_size = fade_out_upper_threshold * scale;
+	float biggest_tile_size = fade_out_upper_threshold * scale_total;
 	float depth = based_log(float(tiles_within), depth_zero_size / biggest_tile_size);
 	depth = ceil(depth);
 	return int(depth);
@@ -153,15 +163,13 @@ vec4 sample_complete(vec2 position) {
 // x is the x index (0 to num_samples)
 // y is the y index (0 to num_samples)
 vec2 get_pixel_offset(int x, int y) {
-	float sample_distance = 2.0/float(sample_dens) * scale;
+	float sample_distance = 2.0/float(sample_dens) * scale_total;
 	float xf = float(x) * sample_distance;
 	float yf = float(y) * sample_distance;
 	return vec2(xf, yf);
 }
 
 void fragment() {
-	screen_pixel_size = SCREEN_PIXEL_SIZE;
-	
 	vec4 color = vec4(0.0);
 	int num_samples = 0;
 	
@@ -173,7 +181,7 @@ void fragment() {
 	for (int x = 0; x < sample_dens; x++) {
 		for (int y = 0; y < sample_dens; y++) {
 			vec2 offset = get_pixel_offset(x, y);
-			color += sample_complete(world_position + offset);
+			color += sample_complete(local_position + offset);
 			num_samples++;
 		}
 	}
