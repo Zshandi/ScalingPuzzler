@@ -101,7 +101,7 @@ vec4 sample_tile_color(vec2 position, float current_tile_size) {
 		return sample_tile_color_checker(position, current_tile_size, checker_color1, checker_color2);
 	}
 	else {
-		return texture(texture, uv);
+		return texture(texture, uv) * texture_modulate;
 	}
 }
 
