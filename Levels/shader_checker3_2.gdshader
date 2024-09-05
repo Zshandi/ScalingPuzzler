@@ -11,17 +11,29 @@ uniform float tile_size = 20.0;
  */
 uniform int tiles_within = 20;
 
-group_uniforms OuterTile1_1;
+group_uniforms Checkers;
 /**
- * Color of the first inner tile, within the first outer tile.
- * Together with color2 will make up the average of the first outer tile.
+ * Set this to use checkers instead of texture.
  */
-uniform vec4 color1 : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform bool use_checkers = true;
 /**
- * Color of the second inner tile, within the first outer tile.
- * Together with color1 will make up the average of the first outer tile.
+ * Color of the first checker tile.
  */
-uniform vec4 color2 : source_color = vec4(0.3, 0.3, 0.3, 1.0);
+uniform vec4 checker_color1 : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+/**
+ * Color of the second checker tile.
+ */
+uniform vec4 checker_color2 : source_color = vec4(0.3, 0.3, 0.3, 1.0);
+
+group_uniforms Texture;
+/**
+ * Used when "Use Checkers" is unchecked.
+ */
+uniform vec4 texture_modulate : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+/**
+ * Used when "Use Checkers" is unchecked.
+ */
+uniform sampler2D texture;
 
 
 group_uniforms Antialiasing;
@@ -68,7 +80,7 @@ void vertex() {
 // Samples a checker pattern at the given position
 // checker_size is the size of the repeating checker tile (2x2 checker pattern)
 // color_a & color_b are the 2 colors to get checker pattern value for
-vec4 sample_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 color_b) {
+vec4 sample_tile_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 color_b) {
 	vec2 uv = position.xy / checker_size;
 	// Essentially mod 1, but works for negatives
     uv = uv - floor(uv);
@@ -80,23 +92,38 @@ vec4 sample_color_checker(vec2 position, float checker_size, vec4 color_a, vec4 
 	return color;
 }
 
-// Will have no contribution below this
-const float fade_in_lower_threshold = 2.0;
-// Will have full contribution above this (but below the fade out)
-const float fade_in_upper_threshold = 10.0;
-// Will have full contribution below this (but above the fade in)
-const float fade_out_lower_threshold = 500.0;
-// Will have no contribution above this
-const float fade_out_upper_threshold = 6000.0;
-
-// Gices either a checker sample, average of the 2 colors, or combination of both,
-//  depending on the calculated size of the tile in pixels
-// checker_size is the size of the checker tile (2x2 checker pattern)
-// color_a & color_b are the 2 colors to either average or get checker pattern value for
-vec4 sample_checker_dynamic(vec2 position, float checker_size, vec4 color_a, vec4 color_b, out float contribution) {
-	float tile_size_pixels = checker_size / scale_total;
+vec4 sample_tile_color(vec2 position, float current_tile_size) {
+	vec2 uv = position.xy / current_tile_size;
+	// Essentially mod 1, but works for negatives
+    uv = uv - floor(uv);
 	
-	vec4 color = sample_color_checker(position, checker_size, color_a, color_b);
+	if (use_checkers) {
+		return sample_tile_color_checker(position, current_tile_size, checker_color1, checker_color2);
+	}
+	else {
+		return texture(texture, uv);
+	}
+}
+
+group_uniforms ScalingAndZoomingFadeParameters;
+
+// Will have no contribution below this
+uniform float fade_in_lower_threshold = 2.0;
+// Will have full contribution above this (but below the fade out)
+uniform float fade_in_upper_threshold = 10.0;
+// Will have full contribution below this (but above the fade in)
+uniform float fade_out_lower_threshold = 500.0;
+// Will have no contribution above this
+uniform float fade_out_upper_threshold = 6000.0;
+
+// Gives either a checker sample, average of the 2 colors, or combination of both,
+//  depending on the calculated size of the tile in pixels
+// current_tile_size is the size of the checker tile (2x2 checker pattern)
+// color_a & color_b are the 2 colors to either average or get checker pattern value for
+vec4 sample_dynamic(vec2 position, float current_tile_size, out float contribution) {
+	float tile_size_pixels = current_tile_size / scale_total;
+	
+	vec4 color = sample_tile_color(position, current_tile_size);
 	
 	if (tile_size_pixels < fade_in_lower_threshold || tile_size_pixels > fade_out_upper_threshold) {
 		contribution = 0.0;
@@ -116,10 +143,11 @@ vec4 sample_checker_dynamic(vec2 position, float checker_size, vec4 color_a, vec
 	}
 }
 
-vec4 sample_depth(int depth, vec2 position, float depth_zero_size, vec4 color_a, vec4 color_b, out float contribution) {
+vec4 sample_depth(int depth, vec2 position, float depth_zero_size, out float contribution) {
+	// Equivalent to dividing `depth_zero_size` by `tiles_within` `depth` times
 	float tile_size_x = depth_zero_size / pow(float(tiles_within), float(depth));
 	
-	return sample_checker_dynamic(position, tile_size_x, color1, color2, contribution);
+	return sample_dynamic(position, tile_size_x, contribution);
 }
 
 float based_log(float base, float x) {
@@ -152,7 +180,7 @@ vec4 sample_complete(vec2 position) {
 	int to = get_highest_contributing_depth(tile_size);
 	
 	for (int i = from; i <= to; i++) {
-		total_color += sample_depth(i, position, tile_size, color1, color2, contrib_to_add);
+		total_color += sample_depth(i, position, tile_size, contrib_to_add);
 		total_contribution += contrib_to_add;
 	}
 	
