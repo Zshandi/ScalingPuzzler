@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cga82pv3bhb1o"]
 
-[ext_resource type="Script" path="res://scale_controller.gd" id="1_pfe70"]
+[ext_resource type="Script" path="res://character/scale_controller.gd" id="1_pfe70"]
 [ext_resource type="PackedScene" uid="uid://cxtn3jpr3d1ax" path="res://block_20x_20_.tscn" id="2_bwqkk"]
-[ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_g36tg"]
+[ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://character/ball.tscn" id="3_g36tg"]
 [ext_resource type="PackedScene" uid="uid://chg1aq00iqvy1" path="res://goal.tscn" id="3_yknmn"]
 
 [node name="Level" type="Node2D"]
