@@ -59,7 +59,6 @@ func _ready():
 	translate_line.owner = get_tree().root
 
 func _physics_process(delta):
-	#handle_scaling(delta)
 	handle_translation(delta)
 	handle_rotation(delta)
 	
@@ -117,7 +116,6 @@ func process_ping_sound() -> void:
 var upward_boost_remaining:float = 0.0
 
 func handle_translation(delta:float) -> void:
-	var ball_radius = $CollisionShape2D.shape.radius
 	if Input.is_action_pressed("control_translate_activate"):
 		var cursor_pos := get_cursor_pos()
 		var center_to_cursor_local:Vector2 = (cursor_pos - global_position) / $CollisionShape2D.scale
