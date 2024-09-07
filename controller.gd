@@ -2,7 +2,7 @@ extends Node2D
 
 ## The amount scaled per scroll
 @export
-var scale_step := 0.3
+var scale_step := 0.25
 ## The strength of the scale smoothing
 ## Note that this corresponds to an exponential decay from the current scale to the target,
 ##  meaning it is not really an exact speed, but rather just determines how steep the decay is,
@@ -56,9 +56,14 @@ func _physics_process(delta):
 	#handle_translation(delta)
 	#handle_rotation(delta)
 
+const scale_margin := 0.005
+
 var target_scale:float = 0.0
 var scale_direction:int = 0
 var scale_origin := Vector2.ZERO
+
+const min_scale := -3.2
+const max_scale := 14.2
 
 func handle_scaling(delta):
 	var current_scale:float = transform_target.get_current_linear_scale()
@@ -70,11 +75,17 @@ func handle_scaling(delta):
 		target_scale -= scale_step
 		print_debug("target_scale: ", target_scale)
 	
+	target_scale = clamp(target_scale, min_scale, max_scale)
+	
 	if target_scale != current_scale:
 		var target_scale_direction = 1 if target_scale > 0 else -1
 		
+		var scale_to:float
 		# Get new scale (exp decay to target)
-		var scale_to := lerpf(current_scale, target_scale, delta * scale_strength)
+		if abs(target_scale - current_scale) <= scale_margin:
+			scale_to = target_scale
+		else:
+			scale_to = lerpf(current_scale, target_scale, delta * scale_strength)
 		
 		if character.is_between_walls && target_scale - current_scale < 0:
 			scale_to = current_scale
