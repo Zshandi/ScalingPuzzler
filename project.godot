@@ -89,3 +89,10 @@ camera_pan_center_lock={
 [rendering]
 
 renderer/rendering_method="mobile"
+
+[shader_globals]
+
+antialiasing_enabled={
+"type": "bool",
+"value": true
+}

@@ -150,8 +150,6 @@ func handle_scaling(delta:float) -> void:
 	target_scale = clampf(target_scale, min_scale, max_scale)
 	
 	if target_scale != current_scale:
-		var target_scale_direction = 1 if target_scale > 0 else -1
-		
 		# Get new scale (exp decay to target)
 		var scale_to := lerpf(current_scale, target_scale, delta * scale_strength)
 		
