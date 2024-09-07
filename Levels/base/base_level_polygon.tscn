@@ -1,21 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://djvv2dg4xowfh"]
+[gd_scene load_steps=5 format=3 uid="uid://djvv2dg4xowfh"]
 
 [ext_resource type="Shader" path="res://Levels/shader_checker3_2.gdshader" id="1_58ehb"]
-[ext_resource type="Texture2D" uid="uid://v55sph685ptg" path="res://assets/gfx/prawndee.png" id="2_0vyrc"]
-[ext_resource type="Texture2D" uid="uid://b57ge3epwfwkb" path="res://assets/backgrounds/tile_20x20.png" id="2_5kioy"]
+[ext_resource type="Texture2D" uid="uid://cumqcyhpatawc" path="res://assets/gfx/goal.png" id="2_od7od"]
 [ext_resource type="Script" path="res://Levels/base/scale_shader.gd" id="3_ca1im"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8sshh"]
 shader = ExtResource("1_58ehb")
-shader_parameter/tile_size = 20.0
-shader_parameter/tiles_within = 20
+shader_parameter/tile_size = 40.0
+shader_parameter/tiles_within = 10
+shader_parameter/depth_offset = Vector2(0.114, 0.114)
 shader_parameter/use_checkers = false
 shader_parameter/checker_color1 = Color(1, 0.411765, 1, 1)
 shader_parameter/checker_color2 = Color(0.512426, 0.132753, 0.662037, 1)
 shader_parameter/texture_modulate = Color(1, 0.235294, 1, 1)
-shader_parameter/texture = ExtResource("2_0vyrc")
+shader_parameter/texture = ExtResource("2_od7od")
 shader_parameter/sample_density = 6
-shader_parameter/scale = 1.5874
+shader_parameter/scale = 1.7818
 shader_parameter/fade_in_lower_threshold = 2.0
 shader_parameter/fade_in_upper_threshold = 10.0
 shader_parameter/fade_out_lower_threshold = 500.0
@@ -26,6 +26,5 @@ polygon = PackedVector2Array(211, 9.00055, 16.0001, -21.9999, 14.0004, -149, 104
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8sshh")
-texture = ExtResource("2_5kioy")
 polygon = PackedVector2Array(211, 9.00055, 16.0001, -21.9999, 14.0004, -149, 104, -151, 104.001, -352, -154.999, -351, -155, -149, -31.9996, -151, -29, 6.99994, -133, 8.99966, -133, 92.9997, -184, 93.9995, -188, 5.99954, -273, 7.99933, -272, 182.999, 2.99957, 182, -1.00061, 249, -323.001, 247.999, -319.999, -384.001, 282.001, -382.999, 282.999, 249.001, 1.99939, 249, 1.99957, 182, 233, 182.001)
 script = ExtResource("3_ca1im")

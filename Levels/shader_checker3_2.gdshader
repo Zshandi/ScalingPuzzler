@@ -10,6 +10,10 @@ uniform float tile_size = 20.0;
  * The size of these inner tiles will be tile_size / tiles_within
  */
 uniform int tiles_within = 20;
+/**
+ * The relative offset of the tiling or texture per depth offset
+ */
+uniform vec2 depth_offset = vec2(0.0);
 
 group_uniforms Checkers;
 /**
@@ -146,6 +150,9 @@ vec4 sample_dynamic(vec2 position, float current_tile_size, out float contributi
 vec4 sample_depth(int depth, vec2 position, float depth_zero_size, out float contribution) {
 	// Equivalent to dividing `depth_zero_size` by `tiles_within` `depth` times
 	float tile_size_x = depth_zero_size / pow(float(tiles_within), float(depth));
+	
+	// Offset the position by the depth offset
+	position += depth_offset * float(depth) * tile_size_x;
 	
 	return sample_dynamic(position, tile_size_x, contribution);
 }
