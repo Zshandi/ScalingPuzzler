@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://d1dxk3g6y2oei"]
 
-[ext_resource type="Script" path="res://controller.gd" id="1_hs6ep"]
+[ext_resource type="Script" path="res://scale_controller.gd" id="1_hs6ep"]
 [ext_resource type="Script" path="res://transformable.gd" id="2_rhtag"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="3_lp4p4"]
 [ext_resource type="Shader" path="res://Levels/level_collision.gdshader" id="3_rrem5"]
