@@ -65,8 +65,10 @@ func handle_scaling(delta):
 	
 	if Input.is_action_just_pressed("control_scale_up"):
 		target_scale += scale_step
+		print_debug("target_scale: ", target_scale)
 	if Input.is_action_just_pressed("control_scale_down"):
 		target_scale -= scale_step
+		print_debug("target_scale: ", target_scale)
 	
 	if target_scale != current_scale:
 		var target_scale_direction = 1 if target_scale > 0 else -1
