@@ -73,7 +73,7 @@ func _ready():
 	target_scale = get_current_linear_scale()
 
 func _physics_process(delta):
-	handle_scaling(delta)
+	#handle_scaling(delta)
 	handle_translation(delta)
 	handle_rotation(delta)
 	
@@ -132,7 +132,7 @@ var target_scale:float = 0.0
 var scale_origin := Vector2.ZERO
 
 func get_current_linear_scale():
-	return based_log(2, $CollisionShape2D.transform.get_scale().length())
+	return Util.based_log(2, $CollisionShape2D.transform.get_scale().length())
 
 var min_scale := -13.2
 var max_scale := 1.2
@@ -223,9 +223,7 @@ func handle_translation(delta:float) -> void:
 func handle_rotation(delta:float) -> void:
 	pass
 
-# Utility helper function, may want to move to static library
-func based_log(base:float = 10, x:float = 10) -> float:
-	return (log(x) / log(base))
+
 
 func get_cursor_pos() -> Vector2:
 	return get_global_mouse_position()

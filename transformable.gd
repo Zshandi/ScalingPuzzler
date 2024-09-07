@@ -3,9 +3,7 @@ class_name Transformable
 
 
 func get_current_linear_scale(axis:int = Vector2.AXIS_X) -> float:
-	return based_log(2, global_transform.get_scale()[axis])
-
-
+	return Util.based_log(2, global_transform.get_scale()[axis])
 
 func linear_scale_from(center:Vector2, linear_scale_by:float):
 	# Convenience: go from float to vector

@@ -51,8 +51,8 @@ func _ready():
 	translate_line.owner = get_tree().root
 
 func _physics_process(delta):
-	pass
-	#handle_scaling(delta)
+	scale_origin = character.global_position
+	handle_scaling(delta)
 	#handle_translation(delta)
 	#handle_rotation(delta)
 
@@ -65,10 +65,8 @@ func handle_scaling(delta):
 	
 	if Input.is_action_just_pressed("control_scale_up"):
 		target_scale += scale_step
-		scale_origin = get_cursor_pos()
 	if Input.is_action_just_pressed("control_scale_down"):
 		target_scale -= scale_step
-		scale_origin = get_cursor_pos()
 	
 	if target_scale != current_scale:
 		var target_scale_direction = 1 if target_scale > 0 else -1
