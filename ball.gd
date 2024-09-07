@@ -144,7 +144,6 @@ func handle_translation(delta:float) -> void:
 			var boost_upward := boost_total.project(Vector2.UP)
 			force += boost_upward
 		
-		force *= $CollisionShape2D.scale
 		apply_force(force)
 		
 		translate_line.from = center_to_cursor_local.normalized() * (translation_min_distance - 10)
