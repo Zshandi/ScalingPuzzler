@@ -3,9 +3,9 @@ class_name ControllerBase
 
 var is_ready := false
 
-var owner:Ball
+var owner:RigidBody2D
 
-func _ready_set_owner(set_owner:Ball):
+func _ready_set_owner(set_owner:RigidBody2D):
 	if not is_ready:
 		is_ready = true
 		owner = set_owner
@@ -23,7 +23,31 @@ func _physics_process(delta:float) -> void:
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 	pass
 
+# Utility function(s)
+
+func get_contact_normals(character_state: PhysicsDirectBodyState2D) -> Array[Vector2]:
+	var normals:Array[Vector2] = []
+	for i in range(0, character_state.get_contact_count()):
+		var normal = character_state.get_contact_local_normal(i)
+		normals.push_back(normal)
+	return normals
+
 # Implement some common node functionality to reduce effort to adapt code
+
+var global_position : Vector2:
+	get: return owner.global_position
+var position : Vector2:
+	get: return owner.position
+
+var global_transform : Transform2D:
+	get: return owner.global_transform
+var transform : Transform2D:
+	get: return owner.transform
+
+var global_rotation : float:
+	get: return owner.global_rotation
+var rotation : float:
+	get: return owner.rotation
 
 var linear_velocity : Vector2:
 	get: return owner.linear_velocity
