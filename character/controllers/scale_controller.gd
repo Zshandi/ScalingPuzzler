@@ -1,4 +1,5 @@
-extends Node2D
+extends ControllerBase
+class_name ScaleController
 
 ## The amount scaled per scroll
 @export
@@ -13,21 +14,21 @@ var scale_strength := 5.0
 var max_scale_speed := 0.2
 
 @export
+var transform_target_path:NodePath
 ## The node to apply transform controls to by default
 var transform_target:Transformable
 
-@export
-## The node that represents the character to reach the goal
-var character:Ball
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	super._ready()
+	transform_target = get_node(transform_target_path)
 	# Assumes equal x and y scale
 	assert(transform_target.global_transform.get_scale().x ==
 		transform_target.global_transform.get_scale().y)
 	target_scale = transform_target.get_current_linear_scale()
 
 func _physics_process(delta):
+	super._physics_process(delta)
 	handle_scaling(delta)
 
 const scale_margin := 0.005
@@ -39,7 +40,7 @@ const min_scale := -3.2
 const max_scale := 14.2
 
 func handle_scaling(delta):
-	scale_origin = character.global_position
+	scale_origin = owner.global_position
 	
 	var current_scale:float = transform_target.get_current_linear_scale()
 	
@@ -60,7 +61,7 @@ func handle_scaling(delta):
 		else:
 			scale_to = lerpf(current_scale, target_scale, delta * scale_strength)
 		
-		if character.is_between_walls && target_scale - current_scale < 0:
+		if owner.is_between_walls && target_scale - current_scale < 0:
 			scale_to = current_scale
 			target_scale = current_scale
 		

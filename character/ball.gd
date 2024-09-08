@@ -2,6 +2,11 @@ extends RigidBody2D
 class_name Ball
 
 @export
+var scale_controller:ControllerBase
+
+var active_controllers:Array[ControllerBase] = []
+
+@export
 ## Angle (in radians) to determine if the ball is squished between 2 walls
 ## Essentially it's the minimum angle the 2 walla need to be to each other to be considered "squished"
 ## Defaulting to slightly less than a half turn
@@ -53,12 +58,23 @@ var translate_line:CappedLine
 var is_between_walls:bool
 
 func _ready():
+	active_controllers.push_back(scale_controller)
+	for controller in active_controllers:
+		controller._ready_set_owner(self)
+	
 	translate_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
 	translate_line.visible = false
 	$CollisionShape2D.add_child(translate_line)
 	translate_line.owner = get_tree().root
 
+func _process(delta):
+	for controller in active_controllers:
+		controller._process(delta)
+
 func _physics_process(delta):
+	for controller in active_controllers:
+		controller._physics_process(delta)
+	
 	handle_translation(delta)
 	handle_rotation(delta)
 	
@@ -66,6 +82,9 @@ func _physics_process(delta):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
+	for controller in active_controllers:
+		controller._integrate_forces(character_state)
+	
 	check_between_walls(character_state)
 
 var normals : Array[Vector2] = []
@@ -155,8 +174,6 @@ func handle_translation(delta:float) -> void:
 
 func handle_rotation(delta:float) -> void:
 	pass
-
-
 
 func get_cursor_pos() -> Vector2:
 	return get_global_mouse_position()

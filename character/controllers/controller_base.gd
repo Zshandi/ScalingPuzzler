@@ -46,3 +46,6 @@ func apply_impulse(impulse: Vector2, position: Vector2 = Vector2(0, 0)) -> void:
 
 func get_global_mouse_position() -> Vector2:
 	return owner.get_global_mouse_position()
+
+func get_node(path:NodePath) -> Node:
+	return owner.get_node(path)

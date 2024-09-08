@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=12 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://character/transformable.gd" id="2_s5duj"]
-[ext_resource type="Script" path="res://character/scale_controller.gd" id="2_xowhr"]
+[ext_resource type="Script" path="res://character/controllers/scale_controller.gd" id="4_6yk10"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://character/ball.tscn" id="5_tgi00"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="6_45bhn"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
@@ -11,15 +11,19 @@
 [ext_resource type="PackedScene" uid="uid://dm2boapqtnnuq" path="res://pause_menu.tscn" id="8_rp1mx"]
 [ext_resource type="PackedScene" uid="uid://ccx1vbth7yagu" path="res://Levels/base/title_card.tscn" id="9_s653q"]
 
+[sub_resource type="Resource" id="Resource_m38qa"]
+script = ExtResource("4_6yk10")
+scale_step = 0.25
+scale_strength = 5.0
+max_scale_speed = 0.2
+transform_target_path = NodePath("../ControllingRoom/ScalableRoomInner")
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4h24l")
 level_name = "Base Level"
 
-[node name="ControllingRoom" type="Node2D" parent="." node_paths=PackedStringArray("transform_target", "character")]
+[node name="ControllingRoom" type="Node2D" parent="."]
 position = Vector2(527, 321)
-script = ExtResource("2_xowhr")
-transform_target = NodePath("ScalableRoomInner")
-character = NodePath("../Ball")
 
 [node name="ScalableRoomInner" type="StaticBody2D" parent="ControllingRoom"]
 rotation = 3.14159
@@ -27,6 +31,7 @@ script = ExtResource("2_s5duj")
 
 [node name="Ball" parent="." instance=ExtResource("5_tgi00")]
 position = Vector2(358, 256)
+scale_controller = SubResource("Resource_m38qa")
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("6_45bhn")]
 background = ExtResource("7_hwag8")
