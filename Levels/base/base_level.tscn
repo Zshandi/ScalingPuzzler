@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=17 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://character/transformable.gd" id="2_s5duj"]
+[ext_resource type="Script" path="res://character/controllers/controller_base.gd" id="4_0gaii"]
 [ext_resource type="Script" path="res://character/controllers/scale_controller.gd" id="4_6yk10"]
-[ext_resource type="Script" path="res://character/controllers/move1_controller.gd" id="5_kwhc4"]
+[ext_resource type="Script" path="res://character/controllers/improved_boost_controller.gd" id="5_kwhc4"]
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://character/ball.tscn" id="5_tgi00"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="6_45bhn"]
 [ext_resource type="Script" path="res://character/controllers/ping_sound_controller.gd" id="6_f0iuq"]
@@ -25,12 +26,13 @@ adjascent_wall_angle = 2.82743
 script = ExtResource("5_kwhc4")
 translation_line_color = Color(1, 1, 1, 1)
 translation_line_width = 9.0
+boost_line_color = Color(0, 1, 1, 1)
 translation_min_distance = 70.0
 translation_max_distance = 500.0
 translation_min_force = 200.0
 translation_max_force = 800.0
-translation_upward_boost = 1000
-translation_upward_boost_amount = 0.3
+translation_upward_boost = 1100
+translation_upward_boost_amount = 0.6
 
 [sub_resource type="Resource" id="Resource_pj4o0"]
 script = ExtResource("6_f0iuq")
@@ -54,7 +56,7 @@ script = ExtResource("2_s5duj")
 
 [node name="Ball" parent="." instance=ExtResource("5_tgi00")]
 position = Vector2(358, 256)
-standard_controllers = Array[Object]([SubResource("Resource_rfqfs"), SubResource("Resource_evn4n"), SubResource("Resource_pj4o0")])
+standard_controllers = Array[ExtResource("4_0gaii")]([SubResource("Resource_rfqfs"), SubResource("Resource_evn4n"), SubResource("Resource_pj4o0")])
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("6_45bhn")]
 background = ExtResource("7_hwag8")

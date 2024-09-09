@@ -6,7 +6,7 @@ var is_ready := false
 var owner:RigidBody2D
 
 func _ready_set_owner(set_owner:RigidBody2D):
-	if not is_ready:
+	if owner != set_owner:
 		is_ready = true
 		owner = set_owner
 		_ready()
@@ -56,7 +56,6 @@ var angular_velocity : float:
 	get: return owner.angular_velocity
 
 func get_tree():
-	if owner == null: return null
 	return owner.get_tree()
 
 func add_child(node: Node, force_readable_name: bool = false, internal: Node.InternalMode = 0) -> void:

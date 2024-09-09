@@ -1,10 +1,13 @@
 extends ControllerBase
-class_name Move1Controller
+class_name ImprovedBoostController
 
 @export
 var translation_line_color := Color.WHITE
 @export
 var translation_line_width:float = 9.0
+
+@export
+var boost_line_color := Color.AQUA
 
 @export
 var translation_min_distance:float = 70
@@ -16,11 +19,12 @@ var translation_min_force:float = 200
 var translation_max_force:float = 800
 
 @export
-var translation_upward_boost = 1000
+var translation_upward_boost = 1100
 @export
-var translation_upward_boost_amount = 0.3
+var translation_upward_boost_amount = 0.6
 
 var translate_line:CappedLine
+var boost_line:CappedLine
 
 var collision_shape:CollisionShape2D
 
@@ -30,10 +34,16 @@ var normals:Array[Vector2]
 
 func _ready():
 	collision_shape = owner.find_child("CollisionShape2D")
+	
 	translate_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
 	translate_line.visible = false
 	collision_shape.add_child(translate_line)
 	translate_line.owner = get_tree().root
+	
+	boost_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, boost_line_color, true)
+	boost_line.visible = false
+	collision_shape.add_child(boost_line)
+	boost_line.owner = get_tree().root
 
 func _physics_process(delta):
 	if Input.is_action_pressed("control_translate_activate"):
@@ -50,6 +60,7 @@ func _physics_process(delta):
 		
 		# Apply boost if on floor
 		var is_on_floor := false
+		var is_using_boost := false
 		for normal in normals:
 			if abs(normal.angle_to(Vector2.UP)) < PI/4:
 				is_on_floor = true
@@ -66,6 +77,7 @@ func _physics_process(delta):
 			# Reduce boost less if not at full amount
 			var boost_percent = boost_upward.length() / translation_upward_boost
 			upward_boost_remaining -= delta * boost_percent
+			is_using_boost = true
 		
 		apply_force(force)
 		
@@ -73,8 +85,19 @@ func _physics_process(delta):
 		translate_line.to = center_to_cursor_local
 		translate_line.rotation = -rotation
 		translate_line.visible = true
+		if is_using_boost:
+			var boost_line_percent:float = upward_boost_remaining / translation_upward_boost_amount
+			var line_offset := translate_line.to - translate_line.from
+			line_offset *= boost_line_percent
+			boost_line.from = translate_line.from
+			boost_line.to = boost_line.from + line_offset
+			boost_line.rotation = translate_line.rotation
+			boost_line.visible = true
+		else:
+			boost_line.visible = false
 	else:
 		translate_line.visible = false
+		boost_line.visible = false
 
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 	normals = get_contact_normals(character_state)
