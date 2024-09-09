@@ -74,10 +74,12 @@ func _physics_process(delta):
 			var boost_upward := boost_total.project(Vector2.UP)
 			force += boost_upward
 			
-			# Reduce boost less if not at full amount
-			var boost_percent = boost_upward.length() / translation_upward_boost
-			upward_boost_remaining -= delta * boost_percent
-			is_using_boost = true
+			# Ensure that the force will counteract gravity
+			if force.y < -owner.get_gravity().y:
+				# Reduce boost less if not at full amount
+				var boost_percent = boost_upward.length() / translation_upward_boost
+				upward_boost_remaining -= delta * boost_percent
+				is_using_boost = true
 		
 		apply_force(force)
 		
