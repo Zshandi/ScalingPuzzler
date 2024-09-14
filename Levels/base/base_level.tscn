@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=21 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://character/transformable.gd" id="2_s5duj"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://character/ball.tscn" id="5_tgi00"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="6_45bhn"]
 [ext_resource type="Script" path="res://character/controllers/ping_sound_controller.gd" id="6_f0iuq"]
+[ext_resource type="Script" path="res://character/controllers/pull_launch_controller.gd" id="6_rxwku"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
 [ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera/camera.tscn" id="7_u76nt"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
@@ -37,6 +38,15 @@ translation_min_force = 200.0
 translation_max_force = 800.0
 translation_upward_boost = 1100
 translation_upward_boost_amount = 0.6
+
+[sub_resource type="Resource" id="Resource_hdx0b"]
+script = ExtResource("6_rxwku")
+translation_line_color = Color(1, 1, 1, 1)
+translation_line_width = 9.0
+pullback_min_distance = 0.0
+pullback_max_distance = 300.0
+pullback_min_impulse = 50.0
+pullback_max_impulse = 800.0
 
 [sub_resource type="Resource" id="Resource_rfqfs"]
 script = ExtResource("4_6yk10")
@@ -70,6 +80,7 @@ script = ExtResource("2_s5duj")
 position = Vector2(358, 256)
 movement_controller_0 = SubResource("Resource_e7b12")
 movement_controller_1 = SubResource("Resource_rgl4j")
+movement_controller_2 = SubResource("Resource_hdx0b")
 standard_controllers = Array[ExtResource("4_0gaii")]([SubResource("Resource_rfqfs"), SubResource("Resource_pj4o0")])
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("6_45bhn")]
