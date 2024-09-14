@@ -16,6 +16,7 @@ var pullback_min_impulse:float = 50
 var pullback_max_impulse:float = 800
 
 var pullback_line:CappedLine
+var pullback_arrow:Polygon2D
 
 var collision_shape:CollisionShape2D
 var collision_radius:float
@@ -34,6 +35,18 @@ func _ready():
 	pullback_line.visible = false
 	collision_shape.add_child(pullback_line)
 	pullback_line.owner = get_tree().root
+	
+	pullback_arrow = Polygon2D.new()
+	pullback_arrow.color = translation_line_color
+	pullback_arrow.polygon = [
+		Vector2(-translation_line_width * 2, 0),
+		Vector2(translation_line_width * 2, 0),
+		Vector2(0, translation_line_width*3)]
+	
+	pullback_arrow.visible = false
+	# Add to root instead, to make position and rotation easier
+	get_tree().root.add_child(pullback_arrow)
+	pullback_arrow.owner = get_tree().root
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("control_translate_activate"):
@@ -57,11 +70,18 @@ func _physics_process(delta):
 			pullback_line.to = -center_to_cursor_local
 			pullback_line.rotation = -rotation
 			pullback_line.visible = true
+			
+			pullback_arrow.position = global_position-center_to_cursor_local
+			# Angle from DOWN because arrow is initially pointing down
+			pullback_arrow.rotation = Vector2.DOWN.angle_to(-center_to_cursor_local)
+			pullback_arrow.visible = true
 		else:
 			current_pullback_impulse = Vector2.ZERO
 			pullback_line.visible = false
+			pullback_arrow.visible = false
 	elif is_pullback_active:
 		pullback_line.visible = false
+		pullback_arrow.visible = false
 		is_pullback_active = false
 		if current_pullback_impulse != Vector2.ZERO:
 			apply_impulse(current_pullback_impulse)
