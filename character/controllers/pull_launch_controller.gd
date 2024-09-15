@@ -25,6 +25,8 @@ var is_pullback_active := false
 
 var current_pullback_impulse:Vector2 = Vector2.ZERO
 
+var jump_start_ms:int = -1
+
 func _ready():
 	collision_shape = owner.find_child("CollisionShape2D")
 	# Dev Note: Assuming the shape is a circle shape here
@@ -52,6 +54,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("control_translate_activate"):
 		if get_cursor_pos().distance_to(global_position) <= collision_radius:
 			is_pullback_active = true
+	
+	if jump_start_ms != -1 and linear_velocity.y >= 0:
+		var elapsed_ms := Time.get_ticks_msec() - jump_start_ms
+		var elapsed_second := elapsed_ms / 1000.0
+		print_debug("Jump max time: ", elapsed_second)
+		jump_start_ms = -1
 	
 	if Input.is_action_pressed("control_translate_activate") and is_pullback_active:
 		var cursor_pos := get_cursor_pos()
@@ -86,6 +94,8 @@ func _physics_process(delta):
 		if current_pullback_impulse != Vector2.ZERO:
 			apply_impulse(current_pullback_impulse)
 			current_pullback_impulse = Vector2.ZERO
+			
+			jump_start_ms = Time.get_ticks_msec()
 
 func get_cursor_pos() -> Vector2:
 	return get_global_mouse_position()
