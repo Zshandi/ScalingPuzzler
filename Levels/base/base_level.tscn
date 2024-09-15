@@ -1,25 +1,76 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=21 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
-[ext_resource type="Script" path="res://transformable.gd" id="2_s5duj"]
-[ext_resource type="Script" path="res://scale_controller.gd" id="2_xowhr"]
-[ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://ball.tscn" id="5_tgi00"]
+[ext_resource type="Script" path="res://character/transformable.gd" id="2_s5duj"]
+[ext_resource type="Script" path="res://character/controllers/controller_base.gd" id="4_0gaii"]
+[ext_resource type="Script" path="res://character/controllers/scale_controller.gd" id="4_6yk10"]
+[ext_resource type="Script" path="res://character/controllers/translate_controller.gd" id="4_ohu8h"]
+[ext_resource type="Script" path="res://character/controllers/improved_boost_controller.gd" id="5_kwhc4"]
+[ext_resource type="PackedScene" uid="uid://gcfibrlv71gp" path="res://character/ball.tscn" id="5_tgi00"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="6_45bhn"]
+[ext_resource type="Script" path="res://character/controllers/ping_sound_controller.gd" id="6_f0iuq"]
+[ext_resource type="Script" path="res://character/controllers/pull_launch_controller.gd" id="6_rxwku"]
 [ext_resource type="Texture2D" uid="uid://qwua243tgxlc" path="res://assets/backgrounds/background_blue.png" id="7_hwag8"]
 [ext_resource type="PackedScene" uid="uid://fpin2a268u0g" path="res://camera/camera.tscn" id="7_u76nt"]
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
 [ext_resource type="PackedScene" uid="uid://dm2boapqtnnuq" path="res://pause_menu.tscn" id="8_rp1mx"]
 [ext_resource type="PackedScene" uid="uid://ccx1vbth7yagu" path="res://Levels/base/title_card.tscn" id="9_s653q"]
 
+[sub_resource type="Resource" id="Resource_e7b12"]
+script = ExtResource("4_ohu8h")
+translation_line_color = Color(1, 1, 1, 1)
+translation_line_width = 3.0
+translation_min_distance = 70.0
+translation_max_distance = 500.0
+translation_min_force = 200.0
+translation_max_force = 800.0
+translation_upward_boost = 1200
+translation_upward_boost_duration = 1
+
+[sub_resource type="Resource" id="Resource_rgl4j"]
+script = ExtResource("5_kwhc4")
+translation_line_color = Color(1, 1, 1, 1)
+translation_line_width = 9.0
+boost_line_color = Color(0, 1, 1, 1)
+translation_min_distance = 70.0
+translation_max_distance = 500.0
+translation_min_force = 200.0
+translation_max_force = 800.0
+translation_upward_boost = 1100
+translation_upward_boost_amount = 0.6
+
+[sub_resource type="Resource" id="Resource_hdx0b"]
+script = ExtResource("6_rxwku")
+translation_line_color = Color(1, 1, 1, 1)
+translation_line_width = 9.0
+pullback_min_distance = 0.0
+pullback_max_distance = 300.0
+pullback_min_impulse = 50.0
+pullback_max_impulse = 800.0
+
+[sub_resource type="Resource" id="Resource_rfqfs"]
+script = ExtResource("4_6yk10")
+scale_step = 0.25
+scale_strength = 5.0
+max_scale_speed = 0.2
+transform_target_path = NodePath("../ControllingRoom/ScalableRoomInner")
+adjascent_wall_angle = 2.82743
+
+[sub_resource type="Resource" id="Resource_pj4o0"]
+script = ExtResource("6_f0iuq")
+accel_ping_threshold = 25.0
+accel_ping_max = 200.0
+min_ping_gain = -10.0
+max_ping_gain = 5.0
+min_ping_pitch = 0.8
+max_ping_pitch = 1.2
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4h24l")
 level_name = "Base Level"
 
-[node name="ControllingRoom" type="Node2D" parent="." node_paths=PackedStringArray("transform_target", "character")]
+[node name="ControllingRoom" type="Node2D" parent="."]
 position = Vector2(527, 321)
-script = ExtResource("2_xowhr")
-transform_target = NodePath("ScalableRoomInner")
-character = NodePath("../Ball")
 
 [node name="ScalableRoomInner" type="StaticBody2D" parent="ControllingRoom"]
 rotation = 3.14159
@@ -27,6 +78,10 @@ script = ExtResource("2_s5duj")
 
 [node name="Ball" parent="." instance=ExtResource("5_tgi00")]
 position = Vector2(358, 256)
+movement_controller_0 = SubResource("Resource_e7b12")
+movement_controller_1 = SubResource("Resource_rgl4j")
+movement_controller_2 = SubResource("Resource_hdx0b")
+standard_controllers = Array[ExtResource("4_0gaii")]([SubResource("Resource_rfqfs"), SubResource("Resource_pj4o0")])
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("6_45bhn")]
 background = ExtResource("7_hwag8")
