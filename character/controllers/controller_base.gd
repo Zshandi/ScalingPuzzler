@@ -5,21 +5,31 @@ var is_ready := false
 
 var owner:RigidBody2D
 
-func _ready_set_owner(set_owner:RigidBody2D):
+# This should never be overridden in child class
+func _ready_set_owner(set_owner:RigidBody2D) -> void:
 	if owner != set_owner:
 		is_ready = true
 		owner = set_owner
 		_ready()
 
+# These should be overridden in child, similar to Node
+# Note though, unlike in Node, you should call base._func()
+
+# Called once when the owner is _ready
+# May be called multiple times as owners are freed etc.
 func _ready() -> void:
 	pass
 
+# Called as idle/render frame, delta is dependent on framerate
 func _process(delta:float) -> void:
 	pass
 
+# Called per physics tick, delta is always constant
 func _physics_process(delta:float) -> void:
 	pass
 
+# Override to modify or inspect the PhysicsDirectBodyState2D
+#  during physics processing
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 	pass
 
@@ -32,7 +42,7 @@ func get_contact_normals(character_state: PhysicsDirectBodyState2D) -> Array[Vec
 		normals.push_back(normal)
 	return normals
 
-# Implement some common node functionality to reduce effort to adapt code
+# Common Node functionality that calls into owner funcs and vars
 
 var global_position : Vector2:
 	get: return owner.global_position
@@ -55,7 +65,7 @@ var linear_velocity : Vector2:
 var angular_velocity : float:
 	get: return owner.angular_velocity
 
-func get_tree():
+func get_tree() -> SceneTree:
 	return owner.get_tree()
 
 func add_child(node: Node, force_readable_name: bool = false, internal: Node.InternalMode = 0) -> void:

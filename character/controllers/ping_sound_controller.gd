@@ -10,6 +10,8 @@ var accel_ping_threshold:float = 25
 @export
 var accel_ping_max:float = 200
 
+# TODO: Move these to a globally accessible location,
+#  so they can be accessed easily from the settings menu
 ## Minimum ping volume gain, in Db
 @export
 var min_ping_gain:float = -10
@@ -33,6 +35,7 @@ func _physics_process(delta) -> void:
 	var accel_magnitude := (linear_velocity - last_velocity).length()
 	last_velocity = linear_velocity
 	
+	# TODO: Make this not play for the pull-back launch
 	if accel_magnitude > accel_ping_threshold:
 		## Scale the value between threshold and max to be between 0 and 1
 		var progress := (accel_magnitude - accel_ping_threshold) / (accel_ping_max - accel_ping_threshold)

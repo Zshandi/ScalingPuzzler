@@ -60,7 +60,6 @@ func _physics_process(delta):
 	for controller in active_controllers:
 		controller._physics_process(delta)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(character_state: PhysicsDirectBodyState2D) -> void:
 	for controller in active_controllers:
 		controller._integrate_forces(character_state)

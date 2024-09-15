@@ -2,9 +2,9 @@ extends ControllerBase
 class_name PullLaunchController
 
 @export
-var translation_line_color := Color.WHITE
+var pullback_line_color := Color.WHITE
 @export
-var translation_line_width:float = 9.0
+var pullback_line_width:float = 9.0
 
 @export
 var pullback_min_distance:float = 0
@@ -33,24 +33,24 @@ func _ready():
 	collision_radius = collision_shape.shape.radius
 	pullback_min_distance = collision_radius
 	
-	pullback_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, translation_line_width, translation_line_color, true)
+	pullback_line = CappedLine.create(Vector2.ZERO, Vector2.ZERO, pullback_line_width, pullback_line_color, true)
 	pullback_line.visible = false
 	collision_shape.add_child(pullback_line)
 	pullback_line.owner = get_tree().root
 	
 	pullback_arrow = Polygon2D.new()
-	pullback_arrow.color = translation_line_color
+	pullback_arrow.color = pullback_line_color
 	pullback_arrow.polygon = [
-		Vector2(-translation_line_width * 2, 0),
-		Vector2(translation_line_width * 2, 0),
-		Vector2(0, translation_line_width*3)]
+		Vector2(-pullback_line_width * 2, 0),
+		Vector2(pullback_line_width * 2, 0),
+		Vector2(0, pullback_line_width*3)]
 	
 	pullback_arrow.visible = false
 	# Add to root instead, to make position and rotation easier
 	get_tree().root.add_child(pullback_arrow)
 	pullback_arrow.owner = get_tree().root
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Input.is_action_just_pressed("control_translate_activate"):
 		if get_cursor_pos().distance_to(global_position) <= collision_radius:
 			is_pullback_active = true
