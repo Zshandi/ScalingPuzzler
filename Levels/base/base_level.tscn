@@ -41,8 +41,8 @@ translation_upward_boost_amount = 0.6
 
 [sub_resource type="Resource" id="Resource_hdx0b"]
 script = ExtResource("6_rxwku")
-translation_line_color = Color(1, 1, 1, 1)
-translation_line_width = 9.0
+pullback_line_color = Color(1, 1, 1, 1)
+pullback_line_width = 9.0
 pullback_min_distance = 0.0
 pullback_max_distance = 300.0
 pullback_min_impulse = 50.0

@@ -31,7 +31,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wc3ll")
 
 [node name="ScrollingBackground" parent="." instance=ExtResource("2_f8ryy")]
 background = ExtResource("3_i2ytm")
@@ -73,86 +72,96 @@ text = "Super Small Ball"
 label_settings = SubResource("LabelSettings_jnk7w")
 horizontal_alignment = 1
 
-[node name="MainSettings" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="SettingsContents" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("1_wc3ll")
+
+[node name="MainSettings" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents"]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 30
 
-[node name="GraphicsButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MainSettings"]
+[node name="GraphicsButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Graphics"
 
-[node name="SoundsButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MainSettings"]
+[node name="SoundsButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Sounds"
 
-[node name="ClearSave" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MainSettings"]
+[node name="ClearSave" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Clear Save Data"
 
-[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/MainSettings"]
+[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Back"
 
-[node name="GraphicsSettings" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="GraphicsSettings" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 30
 
-[node name="FullscreenButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings"]
+[node name="FullscreenButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/GraphicsSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 toggle_mode = true
 text = "Fullscreen: "
 
-[node name="AnialiasingButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings"]
+[node name="AnialiasingButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/GraphicsSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 toggle_mode = true
 text = "Anti-aliasing: "
 
-[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings"]
+[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/GraphicsSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Back"
 
-[node name="SoundsSettings" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="SoundsSettings" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings"]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings"]
 layout_mode = 2
 text = "Music Volume"
 label_settings = ExtResource("4_5oyqd")
 horizontal_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings"]
+[node name="VolumeSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings"]
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 
-[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings"]
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings"]
 layout_mode = 2
 text = "Sound Effects"
 label_settings = ExtResource("4_5oyqd")
 horizontal_alignment = 1
 
-[node name="SFXSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings"]
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings"]
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 
-[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings"]
+[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Back"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents"]
+stream = ExtResource("6_1jf0m")
+volume_db = -6.0
+bus = &"Music"
 
 [node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -173,18 +182,13 @@ size_flags_vertical = 3
 texture = ExtResource("4_ukc6g")
 expand_mode = 3
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_1jf0m")
-volume_db = -6.0
-bus = &"Music"
-
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MainSettings/GraphicsButton" to="." method="_on_graphics_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MainSettings/SoundsButton" to="." method="_on_sounds_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MainSettings/ClearSave" to="." method="_on_clear_save_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MainSettings/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
-[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings/AnialiasingButton" to="." method="_on_anialiasing_button_toggled"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
-[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings/GraphicsButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_graphics_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings/SoundsButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_sounds_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings/ClearSave" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_clear_save_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/MainSettings/BackButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_back_button_pressed"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/GraphicsSettings/FullscreenButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_fullscreen_button_toggled"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/GraphicsSettings/AnialiasingButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_anialiasing_button_toggled"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/GraphicsSettings/BackButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_back_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings/VolumeSlider" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings/SFXSlider" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents/SoundsSettings/BackButton" to="MarginContainer/HBoxContainer/VBoxContainer/SettingsContents" method="_on_back_button_pressed"]
