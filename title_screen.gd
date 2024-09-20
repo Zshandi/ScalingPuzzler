@@ -6,11 +6,11 @@ func _ready() -> void:
 	Settings.load_save_data()
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_packed(level_order.level_order[Settings.current_level])
+	SceneManager.change_scene_to_packed(level_order.level_order[Settings.current_level])
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 
 func _on_settings_pressed() -> void:
-	get_tree().change_scene_to_file("res://settings.tscn")
+	SceneManager.change_scene_to_file("res://settings.tscn")

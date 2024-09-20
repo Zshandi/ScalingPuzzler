@@ -56,7 +56,7 @@ func _on_anialiasing_button_toggled(toggled_on: bool) -> void:
 func _on_back_button_pressed() -> void:
 	Settings.persist_save_data()
 	if main_settings.visible:
-		get_tree().change_scene_to_file("res://title_screen.tscn")
+		SceneManager.change_scene_to_file("res://title_screen.tscn")
 	else:
 		main_settings.visible = true
 		graphics_settings.visible = false

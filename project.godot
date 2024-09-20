@@ -18,6 +18,7 @@ config/icon="res://assets/gfx/ball.png"
 [autoload]
 
 Settings="*res://settings.gd"
+SceneManager="*res://scene_manager.gd"
 
 [display]
 
