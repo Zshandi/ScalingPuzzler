@@ -13,25 +13,24 @@ func set_visible(node:Node, visible:bool):
 	if (node.has_method("set_full_visibility")):
 		node.set_full_visibility(visible)
 
-func change_scene_to_node(scene_node:Node, reset_packed := true):
+func change_scene_to_node(scene_node:Node, transition:SceneTransition = null, reset_packed := true):
 	if reset_packed: current_scene_packed = null
 	
 	var add_to := get_tree().root
 	set_visible(scene_node, false)
 	
 	var switch_to_scene := func():
-		get_tree().paused = true
 		var current_scene := get_tree().current_scene
 		add_to.add_child(scene_node)
 		scene_node.owner = add_to
-		# TODO Transition
 		
-		var transition := SceneTransition.new()
-		
-		await transition.apply(current_scene, scene_node)
+		if transition != null:
+			await transition.apply(current_scene, scene_node)
+		else:
+			set_visible(scene_node, true)
 		
 		if current_scene != null:
-			current_scene.visible = false
+			set_visible(current_scene, false)
 			# Unload current scene
 			current_scene.get_parent().remove_child(current_scene)
 			current_scene.queue_free()
@@ -42,49 +41,19 @@ func change_scene_to_node(scene_node:Node, reset_packed := true):
 	else:
 		switch_to_scene.call_deferred()
 
-func change_scene_to_packed(scene:PackedScene) -> void:
+func change_scene_to_packed(scene:PackedScene, transition:SceneTransition = null) -> void:
 	current_scene_packed = scene
 	var instanced_scene := scene.instantiate()
-	change_scene_to_node(instanced_scene, false)
+	change_scene_to_node(instanced_scene, transition, false)
 
-func change_scene_to_file(file:String) -> void:
+func change_scene_to_file(file:String, transition:SceneTransition = null) -> void:
 	var loaded_file := load(file)
 	assert(loaded_file is PackedScene, "Cannot change scene to file because it is not a scene: " + file)
 	if loaded_file is PackedScene:
-		change_scene_to_packed(loaded_file)
+		change_scene_to_packed(loaded_file, transition)
 
-class SceneTransition:
-	var color:Color
-	var transparent:Color
-	var duration:float
-	
-	var transition_cover_scene:PackedScene = preload("res://scene_manager_transition_cover.tscn")
-	
-	func _init(color_:Color = Color.BLACK, duration_:float = 0.5):
-		color = color_
-		duration = duration_
-		
-		transparent = Color(color, 0)
-	
-	## pre-conditions:  to.visible == false and from.visible == true
-	## post-conditions: to.visible == true  and from.visible == false
-	func apply(from:Node, to:Node):
-		SceneManager.get_tree().paused = true
-		
-		var transition_scene_node:Node = transition_cover_scene.instantiate()
-		SceneManager.get_tree().root.add_child(transition_scene_node)
-		transition_scene_node.owner = SceneManager.get_tree().root
-		
-		var transition:ColorRect = transition_scene_node.find_child("ColorRect")
-		transition.color = transparent
-		
-		var tween := SceneManager.create_tween()
-		tween.tween_property(transition, "color", color, duration/2)
-		tween.tween_callback(func(): SceneManager.set_visible(from, false))
-		tween.tween_callback(func(): SceneManager.set_visible(to, true))
-		tween.tween_property(transition, "color", transparent, duration/2)
-		tween.play()
-		await tween.finished
-		
-		transition_scene_node.queue_free()
-		SceneManager.get_tree().paused = false
+func reload_current_scene(transition:SceneTransition = null) -> void:
+	assert(current_scene_packed != null)
+	if current_scene_packed == null: return
+	var instanced_scene := current_scene_packed.instantiate()
+	change_scene_to_node(instanced_scene, transition, false)

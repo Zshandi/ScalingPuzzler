@@ -6,4 +6,4 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _on_return_pressed() -> void:
-	get_tree().change_scene_to_file("res://title_screen.tscn")
+	SceneManager.change_scene_to_file("res://title_screen.tscn", SceneTransition.DEFAULT)
