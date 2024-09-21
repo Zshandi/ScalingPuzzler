@@ -35,3 +35,8 @@ func _on_level_complete() -> void:
 			Settings.current_level = i+1
 			Settings.persist_save_data()
 			SceneManager.change_scene_to_packed(level_order.level_order[i+1])
+
+func set_full_visibility(value:bool) -> void:
+	visible = value
+	$CanvasLayer.visible = value
+	$ScrollingBackground.visible = value
