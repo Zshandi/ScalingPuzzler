@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c0ntj3kd7wjfy"]
+[gd_scene load_steps=22 format=3 uid="uid://c0ntj3kd7wjfy"]
 
 [ext_resource type="Script" path="res://Levels/base/level.gd" id="1_4h24l"]
 [ext_resource type="Script" path="res://character/transformable.gd" id="2_s5duj"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dlemxkelfiipd" path="res://assets/music/Trouble Makers (Loopable).wav" id="8_jt8gq"]
 [ext_resource type="PackedScene" uid="uid://dm2boapqtnnuq" path="res://pause_menu.tscn" id="8_rp1mx"]
 [ext_resource type="PackedScene" uid="uid://ccx1vbth7yagu" path="res://Levels/base/title_card.tscn" id="9_s653q"]
+[ext_resource type="Script" path="res://Levels/base/debug_commands.gd" id="16_wltfw"]
 
 [sub_resource type="Resource" id="Resource_e7b12"]
 script = ExtResource("4_ohu8h")
@@ -100,3 +101,44 @@ bus = &"Music"
 visible = false
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_rp1mx")]
+
+[node name="DebugCommands" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_wltfw")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DebugCommands"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DebugCommands"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CommandOutput" type="Label" parent="CanvasLayer/DebugCommands/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+vertical_alignment = 2
+
+[node name="CommandPrompt" type="LineEdit" parent="CanvasLayer/DebugCommands/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+draw_control_chars = true
+caret_force_displayed = true
+
+[connection signal="command_received" from="CanvasLayer/DebugCommands" to="." method="_on_debug_commands_command_received"]
+[connection signal="text_submitted" from="CanvasLayer/DebugCommands/VBoxContainer/CommandPrompt" to="CanvasLayer/DebugCommands" method="_on_command_prompt_text_submitted"]

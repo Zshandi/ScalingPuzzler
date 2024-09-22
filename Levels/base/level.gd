@@ -17,6 +17,9 @@ func _ready() -> void:
 		goal.connect("level_complete", _on_level_complete)
 		
 func _on_level_complete() -> void:
+	set_level_relative(1)
+
+func set_level_relative(level_index_offset:int):
 	var i = 0
 	var found = false
 	# Determine the next level
@@ -27,14 +30,18 @@ func _on_level_complete() -> void:
 		i += 1
 	
 	if found:
-		if i >= len(level_order.level_order) - 1:
-			SceneManager.change_scene_to_file("res://game_complete.tscn", SceneTransition.WHITE)
-			Settings.current_level = 0
-			Settings.persist_save_data()
-		else:
-			Settings.current_level = i+1
-			Settings.persist_save_data()
-			SceneManager.change_scene_to_packed(level_order.level_order[i+1], SceneTransition.DEFAULT)
+		set_level(i+level_index_offset)
+
+func set_level(level_index:int):
+	if level_index < 0: level_index = 0
+	if level_index >= len(level_order.level_order):
+		SceneManager.change_scene_to_file("res://game_complete.tscn", SceneTransition.WHITE)
+		Settings.current_level = 0
+		Settings.persist_save_data()
+	else:
+		Settings.current_level = level_index
+		Settings.persist_save_data()
+		SceneManager.change_scene_to_packed(level_order.level_order[level_index], SceneTransition.DEFAULT)
 
 func set_full_visibility(value:bool) -> void:
 	visible = value
