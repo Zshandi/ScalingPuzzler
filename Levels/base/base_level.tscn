@@ -128,8 +128,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CommandOutput" type="Label" parent="CanvasLayer/DebugCommands/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/DebugCommands/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CommandOutput" type="Label" parent="CanvasLayer/DebugCommands/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
 vertical_alignment = 2
