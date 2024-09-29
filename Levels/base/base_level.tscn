@@ -143,6 +143,7 @@ vertical_alignment = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 draw_control_chars = true
+caret_blink = true
 caret_force_displayed = true
 
 [connection signal="command_received" from="CanvasLayer/DebugCommands" to="." method="_on_debug_commands_command_received"]

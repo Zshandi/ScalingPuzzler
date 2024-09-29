@@ -10,6 +10,7 @@ var command_output := $VBoxContainer/ScrollContainer/CommandOutput
 var scroll := $VBoxContainer/ScrollContainer
 
 var command_history:Array[String] = []
+var command_history_none:String = ""
 
 func write_line(output:String):
 	command_output.text += output + "\n"
@@ -61,6 +62,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if !OS.is_debug_build(): return
+	
 	if event.is_action("debug_command_open") and !visible:
 		set_prompt_enabled(true)
 		command_prompt.grab_focus()
@@ -70,7 +72,35 @@ func _input(event: InputEvent) -> void:
 		await get_tree().create_timer(0).timeout
 		set_prompt_enabled(false)
 		command_prompt.clear()
+		command_history_none = ""
 		command_prompt.release_focus()
+	
+	if Input.is_action_just_pressed("ui_up") and visible:
+		navigate_history(1)
+		get_viewport().set_input_as_handled()
+	if Input.is_action_just_pressed("ui_down") and visible:
+		navigate_history(-1)
+		get_viewport().set_input_as_handled()
+
+func navigate_history(by:int):
+	var current_index := command_history.find(command_prompt.text)
+	if (command_prompt.text == "" and command_history_none != ""):
+		current_index = -2
+	
+	var new_index := clampi(current_index + by, -2, command_history.size()-1)
+	
+	if current_index == new_index: return
+	if current_index == -1:
+		command_history_none = command_prompt.text
+	
+	if new_index == -1:
+		command_prompt.text = command_history_none
+	elif new_index == -2:
+		command_prompt.text = ""
+	else:
+		command_prompt.text = command_history[new_index]
+	
+	command_prompt.caret_column = command_prompt.text.length()
 
 func set_prompt_enabled(enabled:bool):
 	command_prompt.editable = enabled
@@ -82,6 +112,12 @@ func set_prompt_enabled(enabled:bool):
 func _on_command_prompt_text_submitted(new_text: String) -> void:
 	write_line(new_text)
 	command_prompt.clear()
+	# Add history, but ensure no duplicates or empty
+	if new_text != "":
+		var recent_entry = command_history.find(new_text)
+		if (recent_entry != -1): command_history.remove_at(recent_entry)
+		command_history.push_front(new_text)
+	command_history_none = ""
 	
 	var command := new_text.trim_prefix("/")
 	process_command(command)
