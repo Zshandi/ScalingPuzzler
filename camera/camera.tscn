@@ -6,12 +6,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyd0j"]
 
 [node name="Camera2D" type="Camera2D"]
+process_mode = 3
 anchor_mode = 0
 script = ExtResource("1_821ld")
 
 [node name="CircleDirectionIndicator" type="Node2D" parent="."]
 
 [node name="DirectionSprite" type="Sprite2D" parent="CircleDirectionIndicator"]
+visible = false
 position = Vector2(-60, 1.36424e-11)
 rotation = 3.14159
 scale = Vector2(0.1, 0.1)

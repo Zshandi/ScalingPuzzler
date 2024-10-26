@@ -24,10 +24,18 @@ func change_scene_to_node(scene_node:Node, transition:SceneTransition = null, re
 		add_to.add_child(scene_node)
 		scene_node.owner = add_to
 		
+		# Note: The transition causes the ball to start the level with some movement,
+		#  and furthermore this movement seems to depend on previous movement / position
+		#  (if you restart, it flips between moving left/right on start)
+		# As a current workaround, we can just set the current scene to disabled processing,
+		#  but we need to be careful as this may not affect nodes with PROCESS_MODE_PAUSABLE set
 		if transition != null:
+			current_scene.process_mode = PROCESS_MODE_DISABLED
 			await transition.apply(current_scene, scene_node)
 		else:
 			set_visible(scene_node, true)
+		# TODO: Remove this line once we get transitions working properly
+		#set_visible(scene_node, true)
 		
 		if current_scene != null:
 			set_visible(current_scene, false)

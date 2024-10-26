@@ -22,8 +22,9 @@ func _ready():
 	for controller in standard_controllers:
 		active_controllers.push_back(controller)
 	
-	current_movement_controller = movement_controller_2
-	active_controllers.push_back(current_movement_controller)
+	if (movement_controller_2 != null):
+		current_movement_controller = movement_controller_2
+		active_controllers.push_back(current_movement_controller)
 	
 	for controller in active_controllers:
 		controller._ready_set_owner(self)
