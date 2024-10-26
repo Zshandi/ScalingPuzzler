@@ -34,8 +34,6 @@ func change_scene_to_node(scene_node:Node, transition:SceneTransition = null, re
 			await transition.apply(current_scene, scene_node)
 		else:
 			set_visible(scene_node, true)
-		# TODO: Remove this line once we get transitions working properly
-		#set_visible(scene_node, true)
 		
 		if current_scene != null:
 			set_visible(current_scene, false)
