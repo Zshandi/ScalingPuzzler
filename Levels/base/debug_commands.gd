@@ -36,14 +36,14 @@ func process_command(command: String):
 			if cmd_args.size() != 1 or !cmd_args[0].is_valid_int():
 				error = "setlevel requires exactly one integer parameter"
 			else:
-				# TODO: Don't rely on position in tree here
-				$"../..".set_level(cmd_args[0].to_int())
+				write_line("Setting level to " + cmd_args[0])
+				LevelManager.set_level(cmd_args[0].to_int())
 		"setlevelrelative":
 			if cmd_args.size() != 1 or !cmd_args[0].is_valid_int():
 				error = "setlevelrelative requires exactly one integer parameter"
 			else:
-				# TODO: Don't rely on position in tree here
-				$"../..".set_level_relative(cmd_args[0].to_int())
+				write_line("Setting level to " + str(Settings.current_level + cmd_args[0].to_int()))
+				LevelManager.set_level_relative(cmd_args[0].to_int())
 		"help":
 			# TODO: Better help system
 			write_line("Available commands: setlevel, setlevelrelative")

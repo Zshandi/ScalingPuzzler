@@ -19,6 +19,8 @@ config/icon="res://assets/gfx/ball.png"
 
 Settings="*res://settings.gd"
 SceneManager="*res://scene_manager.gd"
+DebugCommandsSingleton="*res://Levels/base/debug_commands_singleton.gd"
+LevelManager="*res://Levels/level_manager.gd"
 
 [display]
 

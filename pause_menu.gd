@@ -25,4 +25,4 @@ func _on_quit_to_menu_pressed() -> void:
 
 func _on_restart_level_pressed() -> void:
 	get_tree().paused = false
-	SceneManager.reload_current_scene(SceneTransition.DEFAULT)
+	SceneManager.reload_current_scene()
