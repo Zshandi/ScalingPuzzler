@@ -1,11 +1,10 @@
 extends Resource
 class_name SceneTransition
 
-static var DEFAULT := SceneTransition.new()
-
+static var BLACK := SceneTransition.new(Color.BLACK)
 static var WHITE := SceneTransition.new(Color.WHITE)
-static var LONG := SceneTransition.new(Color.BLACK, 1.5)
-static var WHITE_LONG := SceneTransition.new(Color.WHITE, 1.5)
+
+static var DEFAULT := BLACK
 
 @export
 var color:Color
@@ -15,7 +14,7 @@ var duration:float
 
 var transition_cover_scene:PackedScene = preload("res://scene_manager_transition_cover.tscn")
 
-func _init(color_:Color = Color.BLACK, duration_:float = 0.5):
+func _init(color_:Color, duration_:float = 0.5):
 	color = color_
 	duration = duration_
 	
