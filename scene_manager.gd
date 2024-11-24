@@ -38,9 +38,16 @@ func change_scene_to_node(scene_node:Node, transition:SceneTransition = null, re
 		# As a current workaround, we can just set the current scene to disabled processing,
 		#  but we need to be careful as this may not affect nodes with PROCESS_MODE_PAUSABLE set
 		if transition != null:
+			
+			if (scene_node.has_method("scene_transition_started")):
+				scene_node.scene_transition_started()
+			
 			if current_scene != null:
 				current_scene.process_mode = PROCESS_MODE_DISABLED
 			await transition.apply(current_scene, scene_node, remove_current_scene)
+			
+			if (scene_node.has_method("scene_transition_finished")):
+				scene_node.scene_transition_finished()
 		else:
 			set_visible(scene_node, true)
 			get_tree().current_scene = scene_node

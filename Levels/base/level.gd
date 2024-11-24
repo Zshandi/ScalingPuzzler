@@ -23,3 +23,9 @@ func set_full_visibility(value:bool) -> void:
 	visible = value
 	$CanvasLayer.visible = value
 	$ScrollingBackground.visible = value
+
+func scene_transition_started() -> void:
+	$Ball.process_mode = Node.PROCESS_MODE_DISABLED
+
+func scene_transition_finished() -> void:
+	$Ball.process_mode = Node.PROCESS_MODE_INHERIT
