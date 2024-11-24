@@ -50,7 +50,7 @@ func change_scene_to_node(scene_node:Node, transition:SceneTransition = null, re
 				scene_node.scene_transition_finished()
 		else:
 			set_visible(scene_node, true)
-			get_tree().current_scene = scene_node
+			remove_current_scene.call()
 	
 	if add_to.is_node_ready():
 		switch_to_scene.call()
