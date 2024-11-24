@@ -1,19 +1,19 @@
 extends Control
 
-@onready var main_settings := $MarginContainer/HBoxContainer/VBoxContainer/MainSettings
-@onready var graphics_settings := $MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings
-@onready var sounds_settings := $MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings
+@onready var main_settings := $MainSettings
+@onready var graphics_settings := $GraphicsSettings
+@onready var sounds_settings := $SoundsSettings
 
-@onready var volume_slider = $MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings/VolumeSlider
-@onready var sfx_slider = $MarginContainer/HBoxContainer/VBoxContainer/SoundsSettings/SFXSlider
+@onready var volume_slider = $SoundsSettings/VolumeSlider
+@onready var sfx_slider = $SoundsSettings/SFXSlider
 
 @onready var music_player:AudioStreamPlayer = $AudioStreamPlayer
 
 var music_index: int
 var sfx_index: int
 
-@onready var full_screen_btn:Button = $MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings/FullscreenButton
-@onready var antialiasing_btn:Button = $MarginContainer/HBoxContainer/VBoxContainer/GraphicsSettings/AnialiasingButton
+@onready var full_screen_btn:Button = $GraphicsSettings/FullscreenButton
+@onready var antialiasing_btn:Button = $GraphicsSettings/AnialiasingButton
 
 var full_screen_text:String
 var antialiasing_text:String
@@ -56,7 +56,7 @@ func _on_anialiasing_button_toggled(toggled_on: bool) -> void:
 func _on_back_button_pressed() -> void:
 	Settings.persist_save_data()
 	if main_settings.visible:
-		get_tree().change_scene_to_file("res://title_screen.tscn")
+		SceneManager.change_scene_to_file("res://title_screen.tscn")
 	else:
 		main_settings.visible = true
 		graphics_settings.visible = false

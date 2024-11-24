@@ -20,9 +20,9 @@ func _on_resume_pressed() -> void:
 
 func _on_quit_to_menu_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://title_screen.tscn")
+	SceneManager.change_scene_to_file("res://title_screen.tscn", SceneTransition.DEFAULT)
 
 
 func _on_restart_level_pressed() -> void:
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	SceneManager.reload_current_scene(SceneTransition.DEFAULT)

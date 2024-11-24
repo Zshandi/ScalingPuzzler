@@ -13,6 +13,7 @@ func update_description_label(description: String) -> void:
 
 func _ready() -> void:
 	show()
+	modulate = Color.TRANSPARENT
 	animation_player.play("fadein")
 	$FadeoutTimer.start()
 
