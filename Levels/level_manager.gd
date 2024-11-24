@@ -8,7 +8,7 @@ func set_level_relative(level_index_offset:int):
 func set_level(level_index:int):
 	if level_index < 0: level_index = 0
 	if level_index >= len(level_order):
-		SceneManager.change_scene_to_file("res://game_complete.tscn", SceneTransition.WHITE)
+		SceneManager.change_scene_to_file("res://game_complete.tscn", SceneTransition.FADE_WHITE)
 		Settings.current_level = 0
 		Settings.persist_save_data()
 	else:

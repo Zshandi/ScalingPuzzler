@@ -1,10 +1,10 @@
 extends Resource
 class_name SceneTransition
 
-static var BLACK := SceneTransition.new(Color.BLACK)
-static var WHITE := SceneTransition.new(Color.WHITE)
+static var FADE_BLACK := SceneTransition.new(Color.BLACK)
+static var FADE_WHITE := SceneTransition.new(Color.WHITE)
 
-static var DEFAULT := BLACK
+static var DEFAULT := FADE_BLACK
 
 @export
 var color:Color
