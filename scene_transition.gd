@@ -23,7 +23,7 @@ func _init(color_:Color = Color.BLACK, duration_:float = 0.5):
 
 ## pre-conditions:  to.visible == false and from.visible == true
 ## post-conditions: to.visible == true  and from.visible == false
-func apply(from:Node, to:Node):
+func apply(from:Node, to:Node, remove_from_callback = null):
 	var transition_scene_node:Node = transition_cover_scene.instantiate()
 	SceneManager.get_tree().root.add_child(transition_scene_node)
 	transition_scene_node.owner = SceneManager.get_tree().root
@@ -33,8 +33,8 @@ func apply(from:Node, to:Node):
 	
 	var tween := SceneManager.create_tween()
 	tween.tween_property(transition, "color", color, duration/2)
-	if from != null:
-		tween.tween_callback(func(): SceneManager.set_visible(from, false))
+	if from != null and remove_from_callback is Callable:
+		tween.tween_callback(remove_from_callback)
 	tween.tween_callback(func(): SceneManager.set_visible(to, true))
 	tween.tween_property(transition, "color", transparent, duration/2)
 	tween.play()
