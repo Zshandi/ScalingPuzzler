@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://em5gstufmnb1"]
+[gd_scene load_steps=11 format=3 uid="uid://em5gstufmnb1"]
 
 [ext_resource type="Script" path="res://title_screen.gd" id="1_2e4oi"]
 [ext_resource type="PackedScene" uid="uid://cgsyv55s3of86" path="res://scrolling_background.tscn" id="2_vc276"]
 [ext_resource type="Texture2D" uid="uid://c7a24ave710iq" path="res://assets/gfx/GameImage.png" id="2_y37rn"]
 [ext_resource type="Texture2D" uid="uid://c0t85sjjf3s6n" path="res://assets/backgrounds/background_red.png" id="3_nognn"]
+[ext_resource type="Script" path="res://version.gd" id="4_ni0up"]
 
 [sub_resource type="SystemFont" id="SystemFont_dwudh"]
 font_names = PackedStringArray("Droid Sans")
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_jnk7w"]
 font = SubResource("SystemFont_dwudh")
@@ -17,9 +19,19 @@ shadow_size = 11
 shadow_color = Color(0, 0, 0, 0.360784)
 shadow_offset = Vector2(5.13, 2.395)
 
+[sub_resource type="LabelSettings" id="LabelSettings_78prg"]
+font = SubResource("SystemFont_dwudh")
+font_size = 26
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.360784)
+shadow_offset = Vector2(5.13, 2.395)
+
 [sub_resource type="SystemFont" id="SystemFont_r8ju1"]
 font_names = PackedStringArray("Droid Sans")
 font_weight = 750
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_y4xq8"]
 font_size = 32
@@ -69,11 +81,21 @@ theme_override_constants/separation = 23
 layout_mode = 2
 theme_override_constants/separation = 45
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="TitleContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TitleContainer"]
 layout_mode = 2
 text = "Super Small Ball"
 label_settings = SubResource("LabelSettings_jnk7w")
 horizontal_alignment = 1
+
+[node name="Version" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TitleContainer"]
+layout_mode = 2
+text = "Version 0.x.x"
+label_settings = SubResource("LabelSettings_78prg")
+horizontal_alignment = 1
+script = ExtResource("4_ni0up")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
