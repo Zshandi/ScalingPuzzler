@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <version_prefix> v</version_prefix>
+    <git_main_branch>main</git_main_branch>
+    <exports_base_dir>.\exports</exports_base_dir>
+    <exports>
+        <export name="Web" file_name="index" />
+        <export name="Windows Desktop" file_name="[project_and_version].exe" />
+    </exports>
+</config>
