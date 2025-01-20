@@ -10,7 +10,7 @@ param (
 $project_name_key = "config/name"
 $project_version_key = "config/version"
 
-$config = ([xml](Get-Content '.\build_config.xml')).config
+$config = ([xml](Get-Content '.\export_config.xml')).config
 
 $exports = $config.exports.export
 
