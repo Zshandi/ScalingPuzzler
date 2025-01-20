@@ -50,7 +50,6 @@ else
 # Note that this must end with a number, which is what will be considered the build number
 $version_groups = (Select-String -Path .\project.godot -Pattern "$project_version_key=""((.*)([0-9]+))""").Matches.Groups
 
-$project_version = FindProjectSetting $project_version_key
 $version_string = "$version_prefix$project_version"
 
 if ($version_groups)
@@ -60,7 +59,7 @@ if ($version_groups)
     $version_string = "$version_prefix$project_version"
 
     # If on non-main branch, append the commit number
-    if ((git rev-parse --abbrev-ref HEAD) -ne $git_main_branch)
+    if ((git rev-parse --abbrev-ref HEAD) -ne $git_main_branch -or $DebugExport)
     {
         $commit = (git rev-parse --short HEAD)
 
@@ -123,7 +122,9 @@ foreach ($export in $exports)
     New-Item -Path "$export_path" -ItemType Directory
 
     Write-Host "Exporting for '$export_name', to file $export_file_path" -ForegroundColor Green
-    Start-Process -Wait "$godot_command" "$export_switch ""$export_name"" ""$export_file_path"" $additional_command_args"
+    $cmd_args = "$export_switch ""$export_name"" ""$export_file_path"" $additional_command_args"
+    Write-Host "> $godot_command $cmd_args"
+    Start-Process -Wait "$godot_command" "$cmd_args"
     
     Write-Host "Compressing contents of '$export_path\' to '$export_versioned_dir\$export_zip_file'" -ForegroundColor Green
     Compress-Archive "$export_path\*" -DestinationPath "$export_versioned_dir\$export_zip_file"
